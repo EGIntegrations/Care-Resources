@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Expat Resources",
-    "slug": "expat-resources",
+    "name": "Expat Resources", 
+    "slug": "care-resources",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -52,6 +52,9 @@
       "eas": {
         "projectId": "3f46ff14-fe77-4cde-a8d2-9d193d247f62"
       }
+    },
+    "cli": {
+      "appVersionSource": "local"
     }
   }
 }
