@@ -1,0 +1,134 @@
+[
+  {
+    "id": "mental-health",
+    "name": "Mental Health",
+    "description": "Get support for anxiety, depression, and emotional wellness",
+    "color": "#2160DC",
+    "icon": "heart-outline",
+    "faqs": [
+      {
+        "id": "mh1",
+        "question": "How do I know if I need professional help?",
+        "answer": "If you're experiencing persistent feelings of sadness, anxiety, hopelessness, or if these feelings are interfering with your daily life, work, or relationships, it may be time to seek professional support. Trust your instincts - if something doesn't feel right, it's worth exploring."
+      },
+      {
+        "id": "mh2", 
+        "question": "What mental health resources are available to expats?",
+        "answer": "AGWM provides access to licensed counselors who understand expat challenges. We offer virtual sessions, crisis support, and can help connect you with local resources in your host country. Many services are available 24/7."
+      },
+      {
+        "id": "mh3",
+        "question": "How do I maintain mental health while overseas?",
+        "answer": "Establish routines, stay connected with support networks, practice self-care, be patient with cultural adjustment, and don't hesitate to seek help when needed. Regular check-ins with a counselor can be preventative."
+      }
+    ],
+    "contact": {
+      "id": "counselor1",
+      "name": "Dr. Sarah Martinez",
+      "title": "Licensed Clinical Counselor",
+      "avatar": "https://picsum.photos/100/100?random=21",
+      "phone": "+1-555-MENTAL",
+      "email": "sarah.martinez@agwm.org",
+      "department": "Mental Health Services"
+    }
+  },
+  {
+    "id": "crisis-care",
+    "name": "Crisis Care", 
+    "description": "Immediate support for urgent situations and emergencies",
+    "color": "#F6A01A",
+    "icon": "alert-circle-outline",
+    "faqs": [
+      {
+        "id": "cc1",
+        "question": "What constitutes a mental health crisis?",
+        "answer": "A crisis includes thoughts of self-harm, suicide, harming others, severe panic attacks, psychotic episodes, or any situation where you feel you cannot keep yourself or others safe."
+      },
+      {
+        "id": "cc2",
+        "question": "Who should I contact in a crisis?",
+        "answer": "For immediate danger, call local emergency services (911 in US, 112 in Europe). For mental health crises, contact our 24/7 crisis hotline or your assigned crisis counselor. We're here around the clock."
+      },
+      {
+        "id": "cc3",
+        "question": "What happens when I call the crisis line?",
+        "answer": "You'll speak with a trained crisis counselor who will assess your situation, provide immediate support, help ensure your safety, and connect you with appropriate next steps and resources."
+      }
+    ],
+    "contact": {
+      "id": "crisis1",
+      "name": "Crisis Support Team",
+      "title": "24/7 Crisis Hotline",
+      "avatar": "https://picsum.photos/100/100?random=22",
+      "phone": "+1-800-CRISIS-1",
+      "email": "crisis@agwm.org",
+      "department": "Crisis Intervention"
+    }
+  },
+  {
+    "id": "medical-care",
+    "name": "Medical Care",
+    "description": "Navigate healthcare systems and medical needs abroad",
+    "color": "#4CAF50", 
+    "icon": "medical-outline",
+    "faqs": [
+      {
+        "id": "mc1",
+        "question": "How do I find healthcare in my host country?",
+        "answer": "Start by contacting your field office or regional coordinator. They can provide lists of recommended doctors, hospitals, and clinics. We also maintain a database of English-speaking medical providers worldwide."
+      },
+      {
+        "id": "mc2",
+        "question": "What if I need emergency medical care?",
+        "answer": "Call local emergency services immediately. Contact your field supervisor as soon as possible. AGWM's insurance covers emergency care, and we can help coordinate treatment and communication with providers."
+      },
+      {
+        "id": "mc3", 
+        "question": "How does medical insurance work overseas?",
+        "answer": "AGWM provides comprehensive health coverage including emergency care, routine visits, medications, and medical evacuation if needed. Contact member services for specific coverage details and claim procedures."
+      }
+    ],
+    "contact": {
+      "id": "medical1",
+      "name": "Dr. James Thompson",
+      "title": "Medical Services Coordinator", 
+      "avatar": "https://picsum.photos/100/100?random=23",
+      "phone": "+1-555-MEDICAL",
+      "email": "medical@agwm.org",
+      "department": "Medical Services"
+    }
+  },
+  {
+    "id": "family-support", 
+    "name": "Family Support",
+    "description": "Resources for families navigating life and ministry abroad",
+    "color": "#E28A2B",
+    "icon": "people-outline",
+    "faqs": [
+      {
+        "id": "fs1",
+        "question": "How can I help my children adjust to a new culture?",
+        "answer": "Be patient and validate their feelings. Maintain some home traditions while embracing new ones. Help them find activities they enjoy and connect with other expat families. Consider counseling if adjustment is particularly difficult."
+      },
+      {
+        "id": "fs2",
+        "question": "What marriage support is available for expat couples?",
+        "answer": "We offer couples counseling via video sessions, marriage enrichment resources, and can connect you with other couples for peer support. The stress of cross-cultural ministry can strain relationships - support is available."
+      },
+      {
+        "id": "fs3",
+        "question": "How do I handle family emergencies from home?",
+        "answer": "Contact your field supervisor immediately. We can help with emergency travel arrangements, communication coordination, and provide emotional support during difficult times. Emergency funds may be available."
+      }
+    ],
+    "contact": {
+      "id": "family1",
+      "name": "Maria Rodriguez", 
+      "title": "Family Life Coordinator",
+      "avatar": "https://picsum.photos/100/100?random=24",
+      "phone": "+1-555-FAMILY",
+      "email": "family@agwm.org",
+      "department": "Family Services"
+    }
+  }
+]

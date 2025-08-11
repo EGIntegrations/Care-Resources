@@ -1,0 +1,56 @@
+[
+  {
+    "id": "v1",
+    "title": "Managing Anxiety Abroad",
+    "thumb": "https://picsum.photos/300/200?random=1",
+    "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    "duration": "12:45",
+    "description": "Learn practical techniques for managing anxiety while living in a foreign country.",
+    "category": "Mental Health"
+  },
+  {
+    "id": "v2",
+    "title": "Building Community Connections",
+    "thumb": "https://picsum.photos/300/200?random=2",
+    "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+    "duration": "8:30",
+    "description": "Tips for creating meaningful relationships in your new community.",
+    "category": "Community"
+  },
+  {
+    "id": "v3",
+    "title": "Crisis Prevention Strategies",
+    "thumb": "https://picsum.photos/300/200?random=3",
+    "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    "duration": "15:20",
+    "description": "Recognize warning signs and develop prevention strategies.",
+    "category": "Crisis Care"
+  },
+  {
+    "id": "v4",
+    "title": "Family Support Systems",
+    "thumb": "https://picsum.photos/300/200?random=4",
+    "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+    "duration": "10:15",
+    "description": "Supporting your family through cultural transitions.",
+    "category": "Family"
+  },
+  {
+    "id": "v5",
+    "title": "Medical Care Navigation",
+    "thumb": "https://picsum.photos/300/200?random=5",
+    "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+    "duration": "7:45",
+    "description": "Understanding healthcare systems in your host country.",
+    "category": "Medical"
+  },
+  {
+    "id": "v6",
+    "title": "Cultural Adaptation",
+    "thumb": "https://picsum.photos/300/200?random=6",
+    "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+    "duration": "13:10",
+    "description": "Healthy approaches to cultural adjustment and identity.",
+    "category": "Cultural"
+  }
+]
