@@ -13,11 +13,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../../theme/ThemeProvider';
 import { useSettings } from '../../context/SettingsContext';
 import { useAuth } from '../../context/AuthContext';
+import { useAppAuth } from '../../context/AppAuthContext';
 
 const SettingsScreen: React.FC = () => {
   const { colors, fonts, spacing, radii, shadows } = useTheme();
   const { settings, updateSettings, resetSettings } = useSettings();
-  const { authState, setBiometricEnabled, logout } = useAuth();
+  const { authState, setBiometricEnabled } = useAuth();
+  const { logout } = useAppAuth();
 
   const handleBiometricToggle = (enabled: boolean) => {
     if (enabled && !authState.biometricSupported) {
@@ -33,7 +35,7 @@ const SettingsScreen: React.FC = () => {
     updateSettings({ biometricEnabled: enabled });
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     Alert.alert(
       'Logout',
       'Are you sure you want to logout? You will need to authenticate again to access the app.',
@@ -42,9 +44,14 @@ const SettingsScreen: React.FC = () => {
         {
           text: 'Logout',
           style: 'destructive',
-          onPress: () => {
-            logout();
-            resetSettings();
+          onPress: async () => {
+            try {
+              await logout();
+              resetSettings();
+              // App will automatically show login screen due to state change
+            } catch (error) {
+              console.error('Error during logout:', error);
+            }
           },
         },
       ]

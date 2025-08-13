@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Expat Resources", 
+    "name": "Care Resources", 
     "slug": "care-resources",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -16,9 +16,9 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.agwm.expatresources",
+      "bundleIdentifier": "com.careresources.app",
       "infoPlist": {
-        "NSFaceIDUsageDescription": "Use Face ID or Touch ID to access your secure resources",
+        "NSFaceIDUsageDescription": "Use Face ID or Touch ID to access your secure care resources",
         "ITSAppUsesNonExemptEncryption": false
       }
     },
@@ -27,7 +27,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0C2340"
       },
-      "package": "com.agwm.expatresources",
+      "package": "com.careresources.app",
       "permissions": [
         "USE_BIOMETRIC",
         "USE_FINGERPRINT",

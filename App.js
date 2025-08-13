@@ -5,20 +5,42 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ThemeProvider } from './src/theme/ThemeProvider';
 import { AuthProvider } from './src/context/AuthContext';
 import { SettingsProvider } from './src/context/SettingsContext';
+import { AppAuthProvider, useAppAuth } from './src/context/AppAuthContext';
 import { BottomTabs } from './src/navigation/BottomTabs';
+import { LoginScreen } from './src/screens/Auth/LoginScreen';
+
+const AppContent = () => {
+  const { isAuthenticated, isLoading, login } = useAppAuth();
+
+  if (isLoading) {
+    return null; // Could add a loading screen here
+  }
+
+  return (
+    <>
+      <StatusBar style="light" />
+      {isAuthenticated ? (
+        <NavigationContainer>
+          <BottomTabs />
+        </NavigationContainer>
+      ) : (
+        <LoginScreen onLoginSuccess={login} />
+      )}
+    </>
+  );
+};
 
 export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider>
-        <AuthProvider>
-          <SettingsProvider>
-            <NavigationContainer>
-              <StatusBar style="light" />
-              <BottomTabs />
-            </NavigationContainer>
-          </SettingsProvider>
-        </AuthProvider>
+        <AppAuthProvider>
+          <AuthProvider>
+            <SettingsProvider>
+              <AppContent />
+            </SettingsProvider>
+          </AuthProvider>
+        </AppAuthProvider>
       </ThemeProvider>
     </GestureHandlerRootView>
   );
