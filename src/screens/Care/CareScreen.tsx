@@ -34,6 +34,9 @@ const CareScreen: React.FC = () => {
       setPathways(pathwaysFromApi);
     } catch (error) {
       console.error('Error loading pathways:', error);
+      // Fallback to local data if API fails
+      const localPathways = require('../../data/pathways.json');
+      setPathways(localPathways);
     }
   };
 

@@ -5,7 +5,7 @@
     "title": "Regional Director - Europe",
     "avatar": "https://picsum.photos/100/100?random=31",
     "phone": "+41-79-123-4567",
-    "email": "david.johnson@agwm.org",
+    "email": "david.johnson@careresources.org",
     "department": "Regional Leadership"
   },
   {
@@ -14,7 +14,7 @@
     "title": "Licensed Clinical Counselor",
     "avatar": "https://picsum.photos/100/100?random=32",
     "phone": "+1-555-MENTAL",
-    "email": "sarah.martinez@agwm.org", 
+    "email": "sarah.martinez@careresources.org", 
     "department": "Mental Health Services"
   },
   {
@@ -23,7 +23,7 @@
     "title": "Family Life Coordinator", 
     "avatar": "https://picsum.photos/100/100?random=33",
     "phone": "+1-555-FAMILY",
-    "email": "family@agwm.org",
+    "email": "family@careresources.org",
     "department": "Family Services"
   },
   {
@@ -32,7 +32,7 @@
     "title": "Medical Services Coordinator",
     "avatar": "https://picsum.photos/100/100?random=34",
     "phone": "+1-555-MEDICAL",
-    "email": "medical@agwm.org",
+    "email": "medical@careresources.org",
     "department": "Medical Services"
   },
   {
@@ -41,7 +41,7 @@
     "title": "Regional Director - Asia",
     "avatar": "https://picsum.photos/100/100?random=35", 
     "phone": "+65-9123-4567",
-    "email": "michael.chen@agwm.org",
+    "email": "michael.chen@careresources.org",
     "department": "Regional Leadership"
   },
   {
@@ -50,7 +50,7 @@
     "title": "Member Care Coordinator",
     "avatar": "https://picsum.photos/100/100?random=36",
     "phone": "+1-555-CARE-123",
-    "email": "lisa.williams@agwm.org",
+    "email": "lisa.williams@careresources.org",
     "department": "Member Care"
   },
   {
@@ -59,7 +59,7 @@
     "title": "24/7 Crisis Hotline",
     "avatar": "https://picsum.photos/100/100?random=37",
     "phone": "+1-800-CRISIS-1",
-    "email": "crisis@agwm.org",
+    "email": "crisis@careresources.org",
     "department": "Crisis Intervention"
   },
   {
@@ -68,7 +68,7 @@
     "title": "Regional Director - Africa", 
     "avatar": "https://picsum.photos/100/100?random=38",
     "phone": "+27-82-123-4567",
-    "email": "patricia.adams@agwm.org",
+    "email": "patricia.adams@careresources.org",
     "department": "Regional Leadership"
   }
 ]

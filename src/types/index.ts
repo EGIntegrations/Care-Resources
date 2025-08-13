@@ -65,4 +65,4 @@ export interface AuthState {
   biometricEnabled: boolean;
 }
 
-export const SHARED_PASSCODE = 'AGWM2025';
+export const SHARED_PASSCODE = 'CARE2025';

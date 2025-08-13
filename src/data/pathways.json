@@ -14,7 +14,7 @@
       {
         "id": "mh2", 
         "question": "What mental health resources are available to expats?",
-        "answer": "AGWM provides access to licensed counselors who understand expat challenges. We offer virtual sessions, crisis support, and can help connect you with local resources in your host country. Many services are available 24/7."
+        "answer": "Care Resources provides access to licensed counselors who understand expat challenges. We offer virtual sessions, crisis support, and can help connect you with local resources in your host country. Many services are available 24/7."
       },
       {
         "id": "mh3",
@@ -28,7 +28,7 @@
       "title": "Licensed Clinical Counselor",
       "avatar": "https://picsum.photos/100/100?random=21",
       "phone": "+1-555-MENTAL",
-      "email": "sarah.martinez@agwm.org",
+      "email": "sarah.martinez@careresources.org",
       "department": "Mental Health Services"
     }
   },
@@ -61,7 +61,7 @@
       "title": "24/7 Crisis Hotline",
       "avatar": "https://picsum.photos/100/100?random=22",
       "phone": "+1-800-CRISIS-1",
-      "email": "crisis@agwm.org",
+      "email": "crisis@careresources.org",
       "department": "Crisis Intervention"
     }
   },
@@ -80,12 +80,12 @@
       {
         "id": "mc2",
         "question": "What if I need emergency medical care?",
-        "answer": "Call local emergency services immediately. Contact your field supervisor as soon as possible. AGWM's insurance covers emergency care, and we can help coordinate treatment and communication with providers."
+        "answer": "Call local emergency services immediately. Contact your field supervisor as soon as possible. Care Resources insurance covers emergency care, and we can help coordinate treatment and communication with providers."
       },
       {
         "id": "mc3", 
         "question": "How does medical insurance work overseas?",
-        "answer": "AGWM provides comprehensive health coverage including emergency care, routine visits, medications, and medical evacuation if needed. Contact member services for specific coverage details and claim procedures."
+        "answer": "Care Resources provides comprehensive health coverage including emergency care, routine visits, medications, and medical evacuation if needed. Contact member services for specific coverage details and claim procedures."
       }
     ],
     "contact": {
@@ -94,7 +94,7 @@
       "title": "Medical Services Coordinator", 
       "avatar": "https://picsum.photos/100/100?random=23",
       "phone": "+1-555-MEDICAL",
-      "email": "medical@agwm.org",
+      "email": "medical@careresources.org",
       "department": "Medical Services"
     }
   },
@@ -127,7 +127,7 @@
       "title": "Family Life Coordinator",
       "avatar": "https://picsum.photos/100/100?random=24",
       "phone": "+1-555-FAMILY",
-      "email": "family@agwm.org",
+      "email": "family@careresources.org",
       "department": "Family Services"
     }
   }

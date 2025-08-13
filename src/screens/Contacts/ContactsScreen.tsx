@@ -5,7 +5,10 @@ import {
   StyleSheet,
   FlatList,
   SafeAreaView,
+  TouchableOpacity,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import * as LocalAuthentication from 'expo-local-authentication';
 import { useTheme } from '../../theme/ThemeProvider';
 import { useSettings } from '../../context/SettingsContext';
 import { ContactCard } from '../../components/ContactCard';
@@ -14,18 +17,47 @@ import { Contact } from '../../types';
 import { apiService } from '../../services/api';
 
 const ContactsScreen: React.FC = () => {
-  const { colors, fonts, spacing } = useTheme();
+  const { colors, fonts, spacing, radii } = useTheme();
   const { settings, updateSettings } = useSettings();
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [showPasscodeModal, setShowPasscodeModal] = useState(false);
+  const [biometricAvailable, setBiometricAvailable] = useState(false);
 
   useEffect(() => {
+    checkBiometricAvailability();
     if (settings.contactsUnlocked) {
       loadContacts();
     } else {
-      setShowPasscodeModal(true);
+      attemptBiometricAuth();
     }
   }, [settings.contactsUnlocked]);
+
+  const checkBiometricAvailability = async () => {
+    const compatible = await LocalAuthentication.hasHardwareAsync();
+    const enrolled = await LocalAuthentication.isEnrolledAsync();
+    setBiometricAvailable(compatible && enrolled);
+  };
+
+  const attemptBiometricAuth = async () => {
+    if (biometricAvailable && settings.biometricEnabled) {
+      try {
+        const result = await LocalAuthentication.authenticateAsync({
+          promptMessage: 'Access secure contact directory',
+          cancelLabel: 'Use Passcode',
+          disableDeviceFallback: false,
+        });
+
+        if (result.success) {
+          updateSettings({ contactsUnlocked: true });
+          return;
+        }
+      } catch (error) {
+        console.error('Biometric auth error:', error);
+      }
+    }
+    
+    setShowPasscodeModal(true);
+  };
 
   const loadContacts = async () => {
     try {
@@ -33,12 +65,24 @@ const ContactsScreen: React.FC = () => {
       setContacts(contactsFromApi);
     } catch (error) {
       console.error('Error loading contacts:', error);
+      // Fallback to local data if API fails
+      const localContacts = require('../../data/contacts.json');
+      setContacts(localContacts);
     }
   };
 
   const handlePasscodeSuccess = () => {
     setShowPasscodeModal(false);
     updateSettings({ contactsUnlocked: true });
+  };
+
+  const handlePasscodeCancel = () => {
+    setShowPasscodeModal(false);
+    // Could navigate back or show alternative content
+  };
+
+  const handleRetryBiometric = () => {
+    attemptBiometricAuth();
   };
 
   const renderContactItem = ({ item }: { item: Contact }) => (
@@ -97,6 +141,21 @@ const ContactsScreen: React.FC = () => {
       textAlign: 'center',
       marginBottom: spacing[4],
     },
+    biometricButton: {
+      alignItems: 'center',
+      padding: spacing[4],
+      backgroundColor: colors.grey100,
+      borderRadius: radii.md,
+      borderWidth: 1,
+      borderColor: colors.blue,
+      marginTop: spacing[4],
+    },
+    biometricButtonText: {
+      fontSize: fonts.body,
+      color: colors.blue,
+      marginTop: spacing[2],
+      fontWeight: '600',
+    },
   });
 
   if (!settings.contactsUnlocked) {
@@ -109,13 +168,25 @@ const ContactsScreen: React.FC = () => {
         <View style={styles.lockedContainer}>
           <Text style={styles.lockedText}>
             This directory contains sensitive contact information.
-            Please enter the shared passcode to access.
+            Please authenticate to access.
           </Text>
+          
+          {biometricAvailable && (
+            <TouchableOpacity
+              style={styles.biometricButton}
+              onPress={handleRetryBiometric}
+              activeOpacity={0.7}
+            >
+              <Ionicons name="finger-print" size={32} color={colors.blue} />
+              <Text style={styles.biometricButtonText}>Use Biometric Authentication</Text>
+            </TouchableOpacity>
+          )}
         </View>
 
         <PasscodeModal
           visible={showPasscodeModal}
           onSuccess={handlePasscodeSuccess}
+          onCancel={handlePasscodeCancel}
           title="Access Contacts"
           message="Enter the shared passcode to view the contact directory."
         />

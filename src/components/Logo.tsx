@@ -39,9 +39,9 @@ export const Logo: React.FC<LogoProps> = ({ size = 120 }) => {
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
-        <Text style={styles.logoText}>AGWM</Text>
+        <Text style={styles.logoText}>CR</Text>
       </View>
-      <Text style={styles.brandText}>Expat Resources</Text>
+      <Text style={styles.brandText}>Care Resources</Text>
     </View>
   );
 };

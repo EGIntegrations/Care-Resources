@@ -33,6 +33,9 @@ const VideosScreen: React.FC = () => {
       setVideos(videosFromApi);
     } catch (error) {
       console.error('Error loading videos:', error);
+      // Fallback to local data if API fails
+      const localVideos = require('../../data/videos.json');
+      setVideos(localVideos);
     }
   };
 
