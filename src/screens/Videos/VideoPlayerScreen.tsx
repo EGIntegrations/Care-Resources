@@ -47,7 +47,7 @@ const VideoPlayerScreen: React.FC = () => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.navy,
+      backgroundColor: '#051838',
     },
     videoContainer: {
       flex: 1,

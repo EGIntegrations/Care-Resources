@@ -1,7 +1,7 @@
 export const colors = {
   navy: '#0C2340',        // brand header / tab focus
   blue: '#2160DC',        // primary CTAs & Mental Health card
-  yellow: '#F6A01A',      // Get Help CTA & Crisis Care card
+  yellow: '#FADA5E',      // Get Help CTA & Crisis Care card
   green: '#4CAF50',       // Medical Care card
   orange: '#E28A2B',      // Family Support card footer / alerts
   grey100: '#F5F5F5',     // light bg

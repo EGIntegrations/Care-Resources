@@ -36,7 +36,7 @@
     "id": "crisis-care",
     "name": "Crisis Care", 
     "description": "Immediate support for urgent situations and emergencies",
-    "color": "#F6A01A",
+    "color": "#FADA5E",
     "icon": "alert-circle-outline",
     "faqs": [
       {
@@ -69,7 +69,7 @@
     "id": "medical-care",
     "name": "Medical Care",
     "description": "Navigate healthcare systems and medical needs abroad",
-    "color": "#4CAF50", 
+    "color": "#2160DC", 
     "icon": "medical-outline",
     "faqs": [
       {
@@ -102,7 +102,7 @@
     "id": "family-support", 
     "name": "Family Support",
     "description": "Resources for families navigating life and ministry abroad",
-    "color": "#E28A2B",
+    "color": "#FADA5E",
     "icon": "people-outline",
     "faqs": [
       {
@@ -129,6 +129,138 @@
       "phone": "+1-555-FAMILY",
       "email": "family@careresources.org",
       "department": "Family Services"
+    }
+  },
+  {
+    "id": "local-connections",
+    "name": "Local Connections",
+    "description": "Build community and cultural connections in your host country",
+    "color": "#2160DC",
+    "icon": "globe-outline",
+    "faqs": [
+      {
+        "id": "lc1",
+        "question": "How do I connect with other expats in my area?",
+        "answer": "We maintain regional networks and can connect you with other Care Resources families, local expat communities, international churches, and cultural groups. Many cities have active expat meetups and social groups."
+      },
+      {
+        "id": "lc2",
+        "question": "What's the best way to learn about local culture?",
+        "answer": "Engage with local customs respectfully, learn basic language phrases, participate in community events, and build genuine friendships with locals. Our cultural orientation resources can help you navigate cultural differences."
+      },
+      {
+        "id": "lc3",
+        "question": "How can I contribute to my local community?",
+        "answer": "Look for volunteer opportunities, support local businesses, participate in community events, and share your skills and expertise. Building mutual relationships benefits both you and your host community."
+      }
+    ],
+    "contact": {
+      "id": "cultural1",
+      "name": "Ahmed Hassan",
+      "title": "Cultural Integration Specialist",
+      "avatar": "https://picsum.photos/100/100?random=25",
+      "phone": "+1-555-CULTURE",
+      "email": "cultural@careresources.org",
+      "department": "Community Integration"
+    }
+  },
+  {
+    "id": "embassy-resources",
+    "name": "Embassy & Legal",
+    "description": "Navigate legal requirements, visas, and consular services",
+    "color": "#FADA5E",
+    "icon": "document-text-outline",
+    "faqs": [
+      {
+        "id": "er1",
+        "question": "When should I register with my embassy?",
+        "answer": "Register immediately upon arrival in your host country. Embassy registration helps them locate you during emergencies, natural disasters, or political unrest. It's a crucial safety measure for all expats."
+      },
+      {
+        "id": "er2",
+        "question": "What services does my embassy provide?",
+        "answer": "Embassies provide passport services, emergency assistance, legal referrals, notary services, voting assistance, and can help during medical emergencies or natural disasters. They're your primary government connection abroad."
+      },
+      {
+        "id": "er3",
+        "question": "How do I handle visa and legal issues?",
+        "answer": "Contact our legal assistance team immediately for any visa or legal concerns. We work with immigration lawyers and can help navigate complex legal requirements in your host country."
+      }
+    ],
+    "contact": {
+      "id": "legal1",
+      "name": "Robert Chen",
+      "title": "Legal Affairs Coordinator",
+      "avatar": "https://picsum.photos/100/100?random=26",
+      "phone": "+1-555-EMBASSY",
+      "email": "legal@careresources.org",
+      "department": "Legal & Immigration Services"
+    }
+  },
+  {
+    "id": "education-resources",
+    "name": "Education & Schools",
+    "description": "Navigate schooling options and educational needs for families",
+    "color": "#2160DC",
+    "icon": "school-outline",
+    "faqs": [
+      {
+        "id": "ed1",
+        "question": "What schooling options are available for expat children?",
+        "answer": "Options include international schools, local schools, homeschooling, and online programs. We can help you evaluate options based on your location, budget, language requirements, and educational goals."
+      },
+      {
+        "id": "ed2",
+        "question": "How do I ensure educational continuity when moving?",
+        "answer": "Maintain detailed academic records, choose curricula that transfer easily, consider international programs like IB, and work with our education coordinator to ensure smooth transitions between countries."
+      },
+      {
+        "id": "ed3",
+        "question": "What support is available for children with special needs?",
+        "answer": "We provide specialized support for children with learning differences, disabilities, or other special needs. This includes finding appropriate schools, therapy services, and educational accommodations in your host country."
+      }
+    ],
+    "contact": {
+      "id": "education1",
+      "name": "Dr. Emily Watson",
+      "title": "Education Services Director",
+      "avatar": "https://picsum.photos/100/100?random=27",
+      "phone": "+1-555-SCHOOL",
+      "email": "education@careresources.org",
+      "department": "Educational Services"
+    }
+  },
+  {
+    "id": "financial-guidance",
+    "name": "Financial Guidance",
+    "description": "Manage finances, taxes, and financial planning across borders",
+    "color": "#FADA5E",
+    "icon": "card-outline",
+    "faqs": [
+      {
+        "id": "fg1",
+        "question": "How do I handle taxes while living abroad?",
+        "answer": "US citizens must file taxes regardless of where they live. You may qualify for foreign earned income exclusion or tax credits. We provide tax preparation services and work with specialized expat tax professionals."
+      },
+      {
+        "id": "fg2",
+        "question": "What's the best way to manage money internationally?",
+        "answer": "Use international banking services, consider multiple currency accounts, understand exchange rates and fees, and maintain emergency funds in both home and local currencies. We can recommend trusted financial institutions."
+      },
+      {
+        "id": "fg3",
+        "question": "How do I plan for retirement while working overseas?",
+        "answer": "Continue contributing to retirement accounts, understand social security implications, consider international investment options, and plan for healthcare costs. Our financial advisors specialize in expat retirement planning."
+      }
+    ],
+    "contact": {
+      "id": "finance1",
+      "name": "Jennifer Park",
+      "title": "Financial Planning Advisor",
+      "avatar": "https://picsum.photos/100/100?random=28",
+      "phone": "+1-555-FINANCE",
+      "email": "finance@careresources.org",
+      "department": "Financial Services"
     }
   }
 ]

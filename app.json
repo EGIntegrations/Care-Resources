@@ -2,7 +2,7 @@
   "expo": {
     "name": "Care Resources", 
     "slug": "care-resources",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -17,6 +17,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.careresources.app",
+      "buildNumber": "4",
       "infoPlist": {
         "NSFaceIDUsageDescription": "Use Face ID or Touch ID to access your secure care resources",
         "ITSAppUsesNonExemptEncryption": false
@@ -28,6 +29,7 @@
         "backgroundColor": "#0C2340"
       },
       "package": "com.careresources.app",
+      "versionCode": 2,
       "permissions": [
         "USE_BIOMETRIC",
         "USE_FINGERPRINT",

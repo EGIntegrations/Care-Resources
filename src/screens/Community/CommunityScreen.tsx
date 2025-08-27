@@ -99,10 +99,13 @@ const CommunityScreen: React.FC = () => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.grey100,
+      backgroundColor: '#051838',
+    },
+    safeArea: {
+      backgroundColor: '#051838',
     },
     header: {
-      backgroundColor: colors.navy,
+      backgroundColor: '#051838',
       padding: spacing[4],
       alignItems: 'center',
     },
@@ -128,7 +131,14 @@ const CommunityScreen: React.FC = () => {
       borderRadius: radii.md,
       padding: spacing[4],
       marginBottom: spacing[3],
-      ...shadows.small,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 1,
+      },
+      shadowOpacity: 0.18,
+      shadowRadius: 1.0,
+      elevation: 1,
     },
     eventHeader: {
       flexDirection: 'row',
@@ -181,7 +191,14 @@ const CommunityScreen: React.FC = () => {
       padding: spacing[3],
       marginRight: spacing[3],
       width: 150,
-      ...shadows.small,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 1,
+      },
+      shadowOpacity: 0.18,
+      shadowRadius: 1.0,
+      elevation: 1,
     },
     groupImage: {
       width: '100%',
@@ -216,7 +233,14 @@ const CommunityScreen: React.FC = () => {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
-      ...shadows.medium,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
     },
     forumButtonText: {
       fontSize: fonts.h3,
@@ -227,7 +251,7 @@ const CommunityScreen: React.FC = () => {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}><SafeAreaView style={styles.safeArea} />
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Community</Text>
       </View>
@@ -281,7 +305,7 @@ const CommunityScreen: React.FC = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

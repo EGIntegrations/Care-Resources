@@ -10,20 +10,28 @@ interface PathwayCardProps {
 }
 
 export const PathwayCard: React.FC<PathwayCardProps> = ({ pathway, onPress }) => {
-  const { colors, fonts, radii, shadows } = useTheme();
+  const { colors, fonts, radii, shadows, spacing } = useTheme();
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: pathway.color,
+      backgroundColor: colors.white,
       borderRadius: radii.md,
-      padding: 16,
-      marginVertical: 8,
+      padding: spacing[4],
+      marginVertical: spacing[2],
       flexDirection: 'row',
       alignItems: 'center',
+      borderLeftWidth: 6,
+      borderLeftColor: pathway.color,
       ...shadows.medium,
     },
     iconContainer: {
-      marginRight: 16,
+      width: 50,
+      height: 50,
+      borderRadius: 25,
+      backgroundColor: pathway.color,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginRight: spacing[4],
     },
     content: {
       flex: 1,
@@ -31,16 +39,20 @@ export const PathwayCard: React.FC<PathwayCardProps> = ({ pathway, onPress }) =>
     title: {
       fontSize: fonts.h3,
       fontWeight: '600',
-      color: colors.white,
-      marginBottom: 4,
+      color: colors.grey700,
+      marginBottom: spacing[1],
     },
     description: {
       fontSize: fonts.small,
-      color: colors.white,
-      opacity: 0.9,
+      color: colors.grey700,
+      opacity: 0.8,
+      lineHeight: 18,
     },
     chevron: {
-      marginLeft: 12,
+      marginLeft: spacing[3],
+      padding: spacing[2],
+      borderRadius: radii.sm,
+      backgroundColor: pathway.color,
     },
   });
 
@@ -49,7 +61,7 @@ export const PathwayCard: React.FC<PathwayCardProps> = ({ pathway, onPress }) =>
       <View style={styles.iconContainer}>
         <Ionicons 
           name={pathway.icon as keyof typeof Ionicons.glyphMap} 
-          size={32} 
+          size={24} 
           color={colors.white} 
         />
       </View>
@@ -58,7 +70,7 @@ export const PathwayCard: React.FC<PathwayCardProps> = ({ pathway, onPress }) =>
         <Text style={styles.description}>{pathway.description}</Text>
       </View>
       <View style={styles.chevron}>
-        <Ionicons name="chevron-forward" size={24} color={colors.white} />
+        <Ionicons name="chevron-forward" size={20} color={colors.white} />
       </View>
     </TouchableOpacity>
   );

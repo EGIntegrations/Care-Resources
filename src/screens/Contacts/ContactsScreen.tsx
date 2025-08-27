@@ -92,10 +92,13 @@ const ContactsScreen: React.FC = () => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.grey100,
+      backgroundColor: '#051838',
+    },
+    safeArea: {
+      backgroundColor: '#051838',
     },
     header: {
-      backgroundColor: colors.navy,
+      backgroundColor: '#051838',
       padding: spacing[4],
       alignItems: 'center',
     },
@@ -144,7 +147,7 @@ const ContactsScreen: React.FC = () => {
     biometricButton: {
       alignItems: 'center',
       padding: spacing[4],
-      backgroundColor: colors.grey100,
+      backgroundColor: '#051838',
       borderRadius: radii.md,
       borderWidth: 1,
       borderColor: colors.blue,
@@ -160,7 +163,7 @@ const ContactsScreen: React.FC = () => {
 
   if (!settings.contactsUnlocked) {
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}><SafeAreaView style={styles.safeArea} />
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Contacts</Text>
         </View>
@@ -190,12 +193,12 @@ const ContactsScreen: React.FC = () => {
           title="Access Contacts"
           message="Enter the shared passcode to view the contact directory."
         />
-      </SafeAreaView>
+      </View>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}><SafeAreaView style={styles.safeArea} />
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Contacts</Text>
       </View>
@@ -220,7 +223,7 @@ const ContactsScreen: React.FC = () => {
           />
         )}
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

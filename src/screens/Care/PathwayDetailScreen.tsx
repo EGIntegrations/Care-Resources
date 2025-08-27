@@ -90,7 +90,14 @@ const PathwayDetailScreen: React.FC = () => {
       backgroundColor: colors.white,
       borderRadius: radii.md,
       padding: spacing[4],
-      ...shadows.medium,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
     },
     contactTitle: {
       fontSize: fonts.h3,

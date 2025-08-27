@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useTheme } from '../../theme/ThemeProvider';
@@ -18,19 +19,24 @@ type HomeScreenNavigationProp = BottomTabNavigationProp<BottomTabParamList>;
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const { colors, fonts, spacing, radii, shadows } = useTheme();
+  const [showAllQuickAccess, setShowAllQuickAccess] = useState(false);
 
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.grey100,
+      backgroundColor: '#051838',
+    },
+    safeArea: {
+      backgroundColor: '#051838',
     },
     header: {
-      backgroundColor: colors.navy,
+      backgroundColor: '#051838',
       padding: spacing[4],
       alignItems: 'center',
     },
     content: {
       flex: 1,
+      backgroundColor: colors.grey100,
       padding: spacing[4],
     },
     welcomeSection: {
@@ -60,7 +66,14 @@ const HomeScreen: React.FC = () => {
       padding: spacing[4],
       alignItems: 'center',
       marginBottom: spacing[3],
-      ...shadows.medium,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
     },
     secondaryButton: {
       backgroundColor: colors.yellow,
@@ -68,7 +81,14 @@ const HomeScreen: React.FC = () => {
       padding: spacing[4],
       alignItems: 'center',
       marginBottom: spacing[3],
-      ...shadows.medium,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
     },
     buttonText: {
       fontSize: fonts.h3,
@@ -78,11 +98,16 @@ const HomeScreen: React.FC = () => {
     quickLinksSection: {
       flex: 1,
     },
+    sectionHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: spacing[3],
+    },
     sectionTitle: {
       fontSize: fonts.h2,
       fontWeight: '600',
       color: colors.grey700,
-      marginBottom: spacing[4],
     },
     quickLinksGrid: {
       flexDirection: 'row',
@@ -96,7 +121,14 @@ const HomeScreen: React.FC = () => {
       padding: spacing[4],
       alignItems: 'center',
       marginBottom: spacing[3],
-      ...shadows.small,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 1,
+      },
+      shadowOpacity: 0.18,
+      shadowRadius: 1.0,
+      elevation: 1,
     },
     quickLinkTitle: {
       fontSize: fonts.body,
@@ -114,14 +146,15 @@ const HomeScreen: React.FC = () => {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
+      <SafeAreaView style={styles.safeArea} />
       <View style={styles.header}>
-        <Logo size={100} />
+        <Logo size={280} />
       </View>
       
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.welcomeSection}>
-          <Text style={styles.welcomeTitle}>Welcome to Expat Resources</Text>
+          <Text style={styles.welcomeTitle}>Welcome to Care Resources</Text>
           <Text style={styles.welcomeText}>
             Your comprehensive support system for life and ministry abroad. 
             Access videos, care pathways, and connect with your support network.
@@ -147,7 +180,18 @@ const HomeScreen: React.FC = () => {
         </View>
 
         <View style={styles.quickLinksSection}>
-          <Text style={styles.sectionTitle}>Quick Access</Text>
+          <TouchableOpacity
+            style={styles.sectionHeader}
+            onPress={() => setShowAllQuickAccess(!showAllQuickAccess)}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.sectionTitle}>Quick Access</Text>
+            <Ionicons 
+              name={showAllQuickAccess ? 'chevron-up' : 'chevron-down'} 
+              size={24} 
+              color={colors.grey700} 
+            />
+          </TouchableOpacity>
           
           <View style={styles.quickLinksGrid}>
             <TouchableOpacity
@@ -155,6 +199,7 @@ const HomeScreen: React.FC = () => {
               onPress={() => navigation.navigate('CommunityStack')}
               activeOpacity={0.7}
             >
+              <Ionicons name="globe-outline" size={24} color={colors.blue} style={{ marginBottom: spacing[1] }} />
               <Text style={styles.quickLinkTitle}>Community</Text>
               <Text style={styles.quickLinkDescription}>
                 Events & Groups
@@ -166,37 +211,92 @@ const HomeScreen: React.FC = () => {
               onPress={() => navigation.navigate('ContactsStack')}
               activeOpacity={0.7}
             >
+              <Ionicons name="people-outline" size={24} color={colors.blue} style={{ marginBottom: spacing[1] }} />
               <Text style={styles.quickLinkTitle}>Contacts</Text>
               <Text style={styles.quickLinkDescription}>
                 Support Network
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.quickLinkCard}
-              onPress={() => navigation.navigate('VideosStack')}
-              activeOpacity={0.7}
-            >
-              <Text style={styles.quickLinkTitle}>Training</Text>
-              <Text style={styles.quickLinkDescription}>
-                Video Library
-              </Text>
-            </TouchableOpacity>
+            {showAllQuickAccess && (
+              <>
+                <TouchableOpacity
+                  style={styles.quickLinkCard}
+                  onPress={() => navigation.navigate('VideosStack')}
+                  activeOpacity={0.7}
+                >
+                  <Ionicons name="play-circle-outline" size={24} color={colors.blue} style={{ marginBottom: spacing[1] }} />
+                  <Text style={styles.quickLinkTitle}>Training</Text>
+                  <Text style={styles.quickLinkDescription}>
+                    Video Library
+                  </Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.quickLinkCard}
-              onPress={() => navigation.navigate('SettingsStack')}
-              activeOpacity={0.7}
-            >
-              <Text style={styles.quickLinkTitle}>Settings</Text>
-              <Text style={styles.quickLinkDescription}>
-                Preferences
-              </Text>
-            </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.quickLinkCard}
+                  onPress={() => navigation.navigate('SettingsStack')}
+                  activeOpacity={0.7}
+                >
+                  <Ionicons name="settings-outline" size={24} color={colors.blue} style={{ marginBottom: spacing[1] }} />
+                  <Text style={styles.quickLinkTitle}>Settings</Text>
+                  <Text style={styles.quickLinkDescription}>
+                    Preferences
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.quickLinkCard}
+                  onPress={() => navigation.navigate('CareStack')}
+                  activeOpacity={0.7}
+                >
+                  <Ionicons name="medical-outline" size={24} color={colors.blue} style={{ marginBottom: spacing[1] }} />
+                  <Text style={styles.quickLinkTitle}>Medical Care</Text>
+                  <Text style={styles.quickLinkDescription}>
+                    Health Support
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.quickLinkCard}
+                  onPress={() => navigation.navigate('CareStack')}
+                  activeOpacity={0.7}
+                >
+                  <Ionicons name="heart-outline" size={24} color={colors.blue} style={{ marginBottom: spacing[1] }} />
+                  <Text style={styles.quickLinkTitle}>Mental Health</Text>
+                  <Text style={styles.quickLinkDescription}>
+                    Counseling Support
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.quickLinkCard}
+                  onPress={() => navigation.navigate('CareStack')}
+                  activeOpacity={0.7}
+                >
+                  <Ionicons name="document-text-outline" size={24} color={colors.blue} style={{ marginBottom: spacing[1] }} />
+                  <Text style={styles.quickLinkTitle}>Embassy Info</Text>
+                  <Text style={styles.quickLinkDescription}>
+                    Legal & Visa Help
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.quickLinkCard}
+                  onPress={() => navigation.navigate('CareStack')}
+                  activeOpacity={0.7}
+                >
+                  <Ionicons name="school-outline" size={24} color={colors.blue} style={{ marginBottom: spacing[1] }} />
+                  <Text style={styles.quickLinkTitle}>Education</Text>
+                  <Text style={styles.quickLinkDescription}>
+                    School Resources
+                  </Text>
+                </TouchableOpacity>
+              </>
+            )}
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

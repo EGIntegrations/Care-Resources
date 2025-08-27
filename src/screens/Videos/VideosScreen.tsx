@@ -56,10 +56,13 @@ const VideosScreen: React.FC = () => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.grey100,
+      backgroundColor: '#051838',
+    },
+    safeArea: {
+      backgroundColor: '#051838',
     },
     header: {
-      backgroundColor: colors.navy,
+      backgroundColor: '#051838',
       padding: spacing[4],
       alignItems: 'center',
     },
@@ -70,6 +73,7 @@ const VideosScreen: React.FC = () => {
     },
     content: {
       flex: 1,
+      backgroundColor: colors.grey100,
       padding: spacing[2],
     },
     list: {
@@ -89,7 +93,7 @@ const VideosScreen: React.FC = () => {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}><SafeAreaView style={styles.safeArea} />
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Video Library</Text>
       </View>
@@ -117,7 +121,7 @@ const VideosScreen: React.FC = () => {
           />
         )}
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

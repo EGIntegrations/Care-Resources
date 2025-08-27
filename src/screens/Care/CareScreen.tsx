@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
   View,
   Text,
@@ -7,8 +7,9 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Linking,
+  Alert,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../../theme/ThemeProvider';
@@ -23,38 +24,72 @@ const CareScreen: React.FC = () => {
   const navigation = useNavigation<CareScreenNavigationProp>();
   const { colors, fonts, spacing, radii, shadows } = useTheme();
   const [pathways, setPathways] = useState<Pathway[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    loadPathways();
-  }, []);
+  // Use focus effect to prevent crashes when navigating quickly
+  useFocusEffect(
+    useCallback(() => {
+      if (pathways.length === 0) {
+        loadPathways();
+      }
+    }, [])
+  );
 
-  const loadPathways = async () => {
+  const loadPathways = useCallback(async () => {
+    if (isLoading) return;
+    
+    setIsLoading(true);
+    setError(null);
+    
     try {
-      const pathwaysFromApi = await apiService.getPathways();
-      setPathways(pathwaysFromApi);
-    } catch (error) {
-      console.error('Error loading pathways:', error);
-      // Fallback to local data if API fails
+      // Always use local data first to prevent crashes
       const localPathways = require('../../data/pathways.json');
       setPathways(localPathways);
+      
+      // Try to fetch from API in background
+      try {
+        const pathwaysFromApi = await apiService.getPathways();
+        if (pathwaysFromApi && pathwaysFromApi.length > 0) {
+          setPathways(pathwaysFromApi);
+        }
+      } catch (apiError) {
+        console.log('API not available, using local data:', apiError);
+      }
+    } catch (error) {
+      console.error('Error loading pathways:', error);
+      setError('Unable to load care pathways');
+    } finally {
+      setIsLoading(false);
     }
-  };
+  }, [isLoading]);
 
-  const handlePathwayPress = (pathway: Pathway) => {
-    navigation.navigate('PathwayDetail', { pathway });
-  };
+  const handlePathwayPress = useCallback((pathway: Pathway) => {
+    try {
+      navigation.navigate('PathwayDetail', { pathway });
+    } catch (error) {
+      console.error('Navigation error:', error);
+      Alert.alert('Error', 'Unable to open pathway details');
+    }
+  }, [navigation]);
 
-  const handleEmergencyCall = () => {
-    Linking.openURL('tel:+1-800-CRISIS-1');
-  };
+  const handleEmergencyCall = useCallback(() => {
+    Linking.openURL('tel:+1-800-CRISIS-1').catch((err) => {
+      console.error('Error opening phone dialer:', err);
+      Alert.alert('Error', 'Unable to open phone dialer');
+    });
+  }, []);
 
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.grey100,
+      backgroundColor: '#051838',
+    },
+    safeArea: {
+      backgroundColor: '#051838',
     },
     header: {
-      backgroundColor: colors.navy,
+      backgroundColor: '#051838',
       padding: spacing[4],
       alignItems: 'center',
     },
@@ -65,10 +100,23 @@ const CareScreen: React.FC = () => {
     },
     content: {
       flex: 1,
-      padding: spacing[4],
+      backgroundColor: colors.grey100,
+      paddingTop: spacing[4],
     },
     titleSection: {
+      backgroundColor: colors.white,
+      marginHorizontal: spacing[4],
       marginBottom: spacing[5],
+      padding: spacing[4],
+      borderRadius: radii.md,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 1,
+      },
+      shadowOpacity: 0.18,
+      shadowRadius: 1.0,
+      elevation: 1,
     },
     title: {
       fontSize: fonts.h2,
@@ -85,14 +133,24 @@ const CareScreen: React.FC = () => {
     },
     pathwaysSection: {
       marginBottom: spacing[5],
+      paddingHorizontal: spacing[4],
     },
     emergencyBanner: {
       backgroundColor: colors.orange,
       borderRadius: radii.md,
       padding: spacing[4],
+      marginHorizontal: spacing[4],
+      marginBottom: spacing[4],
       flexDirection: 'row',
       alignItems: 'center',
-      ...shadows.medium,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
     },
     emergencyContent: {
       flex: 1,
@@ -121,33 +179,42 @@ const CareScreen: React.FC = () => {
       fontWeight: '600',
       color: colors.orange,
     },
+    errorContainer: {
+      alignItems: 'center',
+      padding: spacing[4],
+      backgroundColor: colors.white,
+      borderRadius: radii.md,
+      marginBottom: spacing[3],
+    },
+    errorText: {
+      fontSize: fonts.body,
+      color: colors.grey700,
+      textAlign: 'center',
+      marginTop: spacing[2],
+      marginBottom: spacing[3],
+    },
+    retryButton: {
+      backgroundColor: colors.blue,
+      paddingHorizontal: spacing[4],
+      paddingVertical: spacing[2],
+      borderRadius: radii.sm,
+    },
+    retryButtonText: {
+      color: colors.white,
+      fontSize: fonts.small,
+      fontWeight: '600',
+    },
   });
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Care & Support</Text>
-      </View>
+    <View style={styles.container}>
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Care & Support</Text>
+        </View>
+      </SafeAreaView>
       
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        <View style={styles.titleSection}>
-          <Text style={styles.title}>How do I access care?</Text>
-          <Text style={styles.subtitle}>
-            Choose the area where you need support. Each pathway provides 
-            specialized resources and direct access to trained professionals.
-          </Text>
-        </View>
-
-        <View style={styles.pathwaysSection}>
-          {pathways.map((pathway) => (
-            <PathwayCard
-              key={pathway.id}
-              pathway={pathway}
-              onPress={() => handlePathwayPress(pathway)}
-            />
-          ))}
-        </View>
-
         <TouchableOpacity
           style={styles.emergencyBanner}
           onPress={handleEmergencyCall}
@@ -169,8 +236,39 @@ const CareScreen: React.FC = () => {
             <Text style={styles.emergencyButtonText}>Call Now</Text>
           </TouchableOpacity>
         </TouchableOpacity>
+
+        <View style={styles.titleSection}>
+          <Text style={styles.title}>How do I access care?</Text>
+          <Text style={styles.subtitle}>
+            Choose the area where you need support. Each pathway provides 
+            specialized resources and direct access to trained professionals.
+          </Text>
+        </View>
+
+        <View style={styles.pathwaysSection}>
+          {error ? (
+            <View style={styles.errorContainer}>
+              <Ionicons name="alert-circle" size={24} color={colors.orange} />
+              <Text style={styles.errorText}>{error}</Text>
+              <TouchableOpacity
+                style={styles.retryButton}
+                onPress={loadPathways}
+              >
+                <Text style={styles.retryButtonText}>Try Again</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            pathways.map((pathway) => (
+              <PathwayCard
+                key={pathway.id}
+                pathway={pathway}
+                onPress={() => handlePathwayPress(pathway)}
+              />
+            ))
+          )}
+        </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

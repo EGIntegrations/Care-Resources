@@ -88,7 +88,10 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.navy,
+      backgroundColor: '#051838',
+    },
+    safeArea: {
+      backgroundColor: '#051838',
     },
     content: {
       flex: 1,
@@ -128,7 +131,14 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
       alignItems: 'center',
       justifyContent: 'center',
       marginBottom: spacing[3],
-      ...shadows.medium,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
     },
     googleButton: {
       backgroundColor: '#4285F4',
@@ -199,10 +209,11 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
+      <SafeAreaView style={styles.safeArea} />
       <View style={styles.content}>
         <View style={styles.header}>
-          <Logo size={160} showText={true} />
+          <Logo size={320} showText={true} />
           <Text style={styles.welcomeText}>Welcome</Text>
           <Text style={styles.subtitleText}>
             Access your secure care resources and support network
@@ -282,6 +293,6 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
           </Text>
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
