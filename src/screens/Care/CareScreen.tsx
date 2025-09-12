@@ -6,7 +6,6 @@ import {
   ScrollView,
   SafeAreaView,
   TouchableOpacity,
-  Linking,
   Alert,
 } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
@@ -43,19 +42,39 @@ const CareScreen: React.FC = () => {
     setError(null);
     
     try {
-      // Always use local data first to prevent crashes
+      // Load local pathways first
       const localPathways = require('../../data/pathways.json');
-      setPathways(localPathways);
       
-      // Try to fetch from API in background
+      // Load actual contacts and map them to pathways
       try {
-        const pathwaysFromApi = await apiService.getPathways();
-        if (pathwaysFromApi && pathwaysFromApi.length > 0) {
-          setPathways(pathwaysFromApi);
-        }
-      } catch (apiError) {
-        console.log('API not available, using local data:', apiError);
+        const contacts = await apiService.getContacts();
+        const updatedPathways = localPathways.map((pathway: any) => {
+          if (pathway.contact && pathway.contact.id) {
+            const matchingContact = contacts.find(c => c.id === pathway.contact.id);
+            if (matchingContact) {
+              return {
+                ...pathway,
+                contact: matchingContact
+              };
+            }
+          }
+          return pathway;
+        });
+        setPathways(updatedPathways);
+      } catch (contactError) {
+        console.log('Using local pathway contacts, API sync failed:', contactError);
+        setPathways(localPathways);
       }
+      
+      // TODO: API only has 2 pathways, use local data until DynamoDB is updated
+      // try {
+      //   const pathwaysFromApi = await apiService.getPathways();
+      //   if (pathwaysFromApi && pathwaysFromApi.length >= localPathways.length) {
+      //     setPathways(pathwaysFromApi);
+      //   }
+      // } catch (apiError) {
+      //   console.log('API not available, using local data:', apiError);
+      // }
     } catch (error) {
       console.error('Error loading pathways:', error);
       setError('Unable to load care pathways');
@@ -73,12 +92,6 @@ const CareScreen: React.FC = () => {
     }
   }, [navigation]);
 
-  const handleEmergencyCall = useCallback(() => {
-    Linking.openURL('tel:+1-800-CRISIS-1').catch((err) => {
-      console.error('Error opening phone dialer:', err);
-      Alert.alert('Error', 'Unable to open phone dialer');
-    });
-  }, []);
 
   const styles = StyleSheet.create({
     container: {
@@ -121,63 +134,20 @@ const CareScreen: React.FC = () => {
     title: {
       fontSize: fonts.h2,
       fontWeight: '600',
-      color: colors.grey700,
+      color: colors.navy,
       marginBottom: spacing[2],
       textAlign: 'center',
     },
     subtitle: {
       fontSize: fonts.body,
-      color: colors.grey700,
+      color: colors.navy,
       textAlign: 'center',
       lineHeight: 22,
+      fontWeight: '500',
     },
     pathwaysSection: {
       marginBottom: spacing[5],
       paddingHorizontal: spacing[4],
-    },
-    emergencyBanner: {
-      backgroundColor: colors.orange,
-      borderRadius: radii.md,
-      padding: spacing[4],
-      marginHorizontal: spacing[4],
-      marginBottom: spacing[4],
-      flexDirection: 'row',
-      alignItems: 'center',
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
-    },
-    emergencyContent: {
-      flex: 1,
-    },
-    emergencyTitle: {
-      fontSize: fonts.h3,
-      fontWeight: '600',
-      color: colors.white,
-      marginBottom: spacing[1],
-    },
-    emergencyText: {
-      fontSize: fonts.body,
-      color: colors.white,
-      opacity: 0.9,
-    },
-    emergencyButton: {
-      backgroundColor: colors.white,
-      borderRadius: radii.sm,
-      padding: spacing[3],
-      marginLeft: spacing[3],
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    emergencyButtonText: {
-      fontSize: fonts.small,
-      fontWeight: '600',
-      color: colors.orange,
     },
     errorContainer: {
       alignItems: 'center',
@@ -215,27 +185,6 @@ const CareScreen: React.FC = () => {
       </SafeAreaView>
       
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        <TouchableOpacity
-          style={styles.emergencyBanner}
-          onPress={handleEmergencyCall}
-          activeOpacity={0.8}
-        >
-          <View style={styles.emergencyContent}>
-            <Text style={styles.emergencyTitle}>Need immediate assistance?</Text>
-            <Text style={styles.emergencyText}>
-              24/7 Crisis Support Available
-            </Text>
-          </View>
-          
-          <TouchableOpacity
-            style={styles.emergencyButton}
-            onPress={handleEmergencyCall}
-            activeOpacity={0.7}
-          >
-            <Ionicons name="call" size={16} color={colors.orange} />
-            <Text style={styles.emergencyButtonText}>Call Now</Text>
-          </TouchableOpacity>
-        </TouchableOpacity>
 
         <View style={styles.titleSection}>
           <Text style={styles.title}>How do I access care?</Text>

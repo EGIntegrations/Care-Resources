@@ -1,5 +1,53 @@
 [
   {
+    "id": "wellness",
+    "name": "Wellness",
+    "description": "Support for reentry, marriage, solo service, and life transitions",
+    "color": "#4CAF50",
+    "icon": "leaf-outline",
+    "faqs": [
+      {
+        "id": "w1",
+        "question": "How do I prepare for reentry to my home country?",
+        "answer": "Reentry can be more challenging than initial departure. Prepare by setting realistic expectations, connecting with other returnees, planning for reverse culture shock, and seeking debriefing support. Professional reentry counseling is available."
+      },
+      {
+        "id": "w2",
+        "question": "What debriefing services are available?",
+        "answer": "We offer comprehensive debriefing services including individual sessions, group debriefings, family processing, and specialized programs for different career stages. Debriefing helps process experiences and transition well."
+      },
+      {
+        "id": "w3",
+        "question": "How can I strengthen my marriage while serving overseas?",
+        "answer": "Marriage support includes couples counseling, marriage enrichment programs, communication workshops, and connecting with other missionary couples. The stresses of cross-cultural ministry require intentional relationship care."
+      },
+      {
+        "id": "w4",
+        "question": "What resources are available for solo servants?",
+        "answer": "Solo servants receive specialized support including community building, mentorship programs, safety protocols, emotional care, and connections with other solo servants globally. You're not alone in your service."
+      },
+      {
+        "id": "w5",
+        "question": "How do I plan for retirement from ministry?",
+        "answer": "Retirement planning includes financial guidance, healthcare transitions, housing considerations, purpose redefinition, and social connection maintenance. Our specialized retirement counselors help navigate this major life transition."
+      },
+      {
+        "id": "w6",
+        "question": "What are Peacemakers and how can they help?",
+        "answer": "Peacemakers are trained conflict resolution specialists who help resolve disputes, restore relationships, and promote reconciliation. They're available for interpersonal conflicts, team issues, and community reconciliation."
+      }
+    ],
+    "contact": {
+      "id": "c2",
+      "name": "Aaron Santmyire",
+      "title": "Member Care Director",
+      "avatar": "https://picsum.photos/100/100?random=32",
+      "phone": "+1-417-862-1606",
+      "email": "asantmyire@ag.org",
+      "department": "Member Care"
+    }
+  },
+  {
     "id": "mental-health",
     "name": "Mental Health",
     "description": "Get support for anxiety, depression, and emotional wellness",
@@ -23,244 +71,132 @@
       }
     ],
     "contact": {
-      "id": "counselor1",
-      "name": "Dr. Sarah Martinez",
-      "title": "Licensed Clinical Counselor",
-      "avatar": "https://picsum.photos/100/100?random=21",
-      "phone": "+1-555-MENTAL",
-      "email": "sarah.martinez@careresources.org",
+      "id": "c3",
+      "name": "Kerry Marsh",
+      "title": "Mental Health Coordinator",
+      "avatar": "https://picsum.photos/100/100?random=33",
+      "phone": "+1-417-862-1603",
+      "email": "kmarsh@ag.org",
       "department": "Mental Health Services"
     }
   },
   {
-    "id": "crisis-care",
-    "name": "Crisis Care", 
-    "description": "Immediate support for urgent situations and emergencies",
-    "color": "#FADA5E",
-    "icon": "alert-circle-outline",
-    "faqs": [
-      {
-        "id": "cc1",
-        "question": "What constitutes a mental health crisis?",
-        "answer": "A crisis includes thoughts of self-harm, suicide, harming others, severe panic attacks, psychotic episodes, or any situation where you feel you cannot keep yourself or others safe."
-      },
-      {
-        "id": "cc2",
-        "question": "Who should I contact in a crisis?",
-        "answer": "For immediate danger, call local emergency services (911 in US, 112 in Europe). For mental health crises, contact our 24/7 crisis hotline or your assigned crisis counselor. We're here around the clock."
-      },
-      {
-        "id": "cc3",
-        "question": "What happens when I call the crisis line?",
-        "answer": "You'll speak with a trained crisis counselor who will assess your situation, provide immediate support, help ensure your safety, and connect you with appropriate next steps and resources."
-      }
-    ],
-    "contact": {
-      "id": "crisis1",
-      "name": "Crisis Support Team",
-      "title": "24/7 Crisis Hotline",
-      "avatar": "https://picsum.photos/100/100?random=22",
-      "phone": "+1-800-CRISIS-1",
-      "email": "crisis@careresources.org",
-      "department": "Crisis Intervention"
-    }
-  },
-  {
-    "id": "medical-care",
-    "name": "Medical Care",
-    "description": "Navigate healthcare systems and medical needs abroad",
-    "color": "#2160DC", 
-    "icon": "medical-outline",
-    "faqs": [
-      {
-        "id": "mc1",
-        "question": "How do I find healthcare in my host country?",
-        "answer": "Start by contacting your field office or regional coordinator. They can provide lists of recommended doctors, hospitals, and clinics. We also maintain a database of English-speaking medical providers worldwide."
-      },
-      {
-        "id": "mc2",
-        "question": "What if I need emergency medical care?",
-        "answer": "Call local emergency services immediately. Contact your field supervisor as soon as possible. Care Resources insurance covers emergency care, and we can help coordinate treatment and communication with providers."
-      },
-      {
-        "id": "mc3", 
-        "question": "How does medical insurance work overseas?",
-        "answer": "Care Resources provides comprehensive health coverage including emergency care, routine visits, medications, and medical evacuation if needed. Contact member services for specific coverage details and claim procedures."
-      }
-    ],
-    "contact": {
-      "id": "medical1",
-      "name": "Dr. James Thompson",
-      "title": "Medical Services Coordinator", 
-      "avatar": "https://picsum.photos/100/100?random=23",
-      "phone": "+1-555-MEDICAL",
-      "email": "medical@careresources.org",
-      "department": "Medical Services"
-    }
-  },
-  {
-    "id": "family-support", 
-    "name": "Family Support",
-    "description": "Resources for families navigating life and ministry abroad",
-    "color": "#FADA5E",
+    "id": "tck-care",
+    "name": "TCK Care",
+    "description": "Support for Third Culture Kids, families, and education needs",
+    "color": "#E28A2B",
     "icon": "people-outline",
     "faqs": [
       {
-        "id": "fs1",
-        "question": "How can I help my children adjust to a new culture?",
-        "answer": "Be patient and validate their feelings. Maintain some home traditions while embracing new ones. Help them find activities they enjoy and connect with other expat families. Consider counseling if adjustment is particularly difficult."
+        "id": "tck1",
+        "question": "What is a Third Culture Kid (TCK)?",
+        "answer": "A TCK is someone who has spent significant developmental years outside their parents' culture. They often develop a 'third culture' that blends their passport culture, host culture(s), and the international community culture."
       },
       {
-        "id": "fs2",
-        "question": "What marriage support is available for expat couples?",
-        "answer": "We offer couples counseling via video sessions, marriage enrichment resources, and can connect you with other couples for peer support. The stress of cross-cultural ministry can strain relationships - support is available."
+        "id": "tck2",
+        "question": "How can I help my TCK children adjust and thrive?",
+        "answer": "Validate their unique experiences, help them build cultural bridges, provide stability and consistency, connect them with other TCKs, and consider professional counseling if needed. Their multicultural perspective is a gift."
       },
       {
-        "id": "fs3",
-        "question": "How do I handle family emergencies from home?",
-        "answer": "Contact your field supervisor immediately. We can help with emergency travel arrangements, communication coordination, and provide emotional support during difficult times. Emergency funds may be available."
+        "id": "tck3",
+        "question": "What educational support is available for expat families?",
+        "answer": "We provide guidance on international schools, homeschooling, online programs, educational continuity between moves, special needs support, and college preparation for TCKs returning to their passport country."
+      },
+      {
+        "id": "tck4",
+        "question": "How do I support my family through transitions?",
+        "answer": "Family support includes transition counseling, cultural adjustment resources, maintaining connections with extended family, creating new traditions, and helping each family member process the unique challenges of expat life."
+      },
+      {
+        "id": "tck5",
+        "question": "What is TCKIA and how can it help?",
+        "answer": "Third Culture Kid Identity Assessment (TCKIA) helps individuals understand their multicultural identity, processing their experiences, and leveraging their global perspective. It's valuable for both teens and adults."
       }
     ],
     "contact": {
-      "id": "family1",
-      "name": "Maria Rodriguez", 
-      "title": "Family Life Coordinator",
-      "avatar": "https://picsum.photos/100/100?random=24",
-      "phone": "+1-555-FAMILY",
-      "email": "family@careresources.org",
+      "id": "c4",
+      "name": "Wendy Wright",
+      "title": "TCK Program Coordinator",
+      "avatar": "https://picsum.photos/100/100?random=34",
+      "phone": "+1-417-862-2040",
+      "email": "wwright@ag.org",
       "department": "Family Services"
     }
   },
   {
-    "id": "local-connections",
-    "name": "Local Connections",
-    "description": "Build community and cultural connections in your host country",
-    "color": "#2160DC",
-    "icon": "globe-outline",
+    "id": "child-safety",
+    "name": "Child Safety",
+    "description": "Resources and support for child protection and safety concerns",
+    "color": "#F44336",
+    "icon": "shield-checkmark-outline",
     "faqs": [
       {
-        "id": "lc1",
-        "question": "How do I connect with other expats in my area?",
-        "answer": "We maintain regional networks and can connect you with other Care Resources families, local expat communities, international churches, and cultural groups. Many cities have active expat meetups and social groups."
+        "id": "cs1",
+        "question": "How do I report a child safety concern?",
+        "answer": "Contact our Raise a Concern Helpline immediately at +1-417-212-5976. All reports are taken seriously and handled with confidentiality. You can also contact our Child Safety Coordinator directly."
       },
       {
-        "id": "lc2",
-        "question": "What's the best way to learn about local culture?",
-        "answer": "Engage with local customs respectfully, learn basic language phrases, participate in community events, and build genuine friendships with locals. Our cultural orientation resources can help you navigate cultural differences."
+        "id": "cs2",
+        "question": "What child safety resources are available?",
+        "answer": "We provide child protection training, safety protocols, background screening, reporting procedures, trauma-informed care, and specialized support for families dealing with safety concerns."
       },
       {
-        "id": "lc3",
-        "question": "How can I contribute to my local community?",
-        "answer": "Look for volunteer opportunities, support local businesses, participate in community events, and share your skills and expertise. Building mutual relationships benefits both you and your host community."
+        "id": "cs3",
+        "question": "How do I protect my children while living overseas?",
+        "answer": "Learn about local safety risks, establish safety protocols, maintain open communication with children, know emergency contacts, and ensure children understand appropriate boundaries and how to seek help."
+      },
+      {
+        "id": "cs4",
+        "question": "What should I do if I suspect abuse or neglect?",
+        "answer": "Take all concerns seriously. Contact the Raise a Concern Helpline immediately. Do not investigate yourself. Our trained professionals will guide you through appropriate steps to ensure child safety."
       }
     ],
     "contact": {
-      "id": "cultural1",
-      "name": "Ahmed Hassan",
-      "title": "Cultural Integration Specialist",
-      "avatar": "https://picsum.photos/100/100?random=25",
-      "phone": "+1-555-CULTURE",
-      "email": "cultural@careresources.org",
-      "department": "Community Integration"
+      "id": "c5",
+      "name": "Cara Tyler",
+      "title": "Child Safety Coordinator",
+      "avatar": "https://picsum.photos/100/100?random=35",
+      "phone": "+1-417-862-1601",
+      "email": "agwmchildsafety@ag.org",
+      "department": "Child Safety"
     }
   },
   {
-    "id": "embassy-resources",
-    "name": "Embassy & Legal",
-    "description": "Navigate legal requirements, visas, and consular services",
-    "color": "#FADA5E",
-    "icon": "document-text-outline",
+    "id": "global-security",
+    "name": "Global Security",
+    "description": "Security training and crisis support for international service",
+    "color": "#607D8B",
+    "icon": "shield-outline",
     "faqs": [
       {
-        "id": "er1",
-        "question": "When should I register with my embassy?",
-        "answer": "Register immediately upon arrival in your host country. Embassy registration helps them locate you during emergencies, natural disasters, or political unrest. It's a crucial safety measure for all expats."
+        "id": "gs1",
+        "question": "What security training is available?",
+        "answer": "We provide comprehensive security training including situational awareness, threat assessment, emergency procedures, communication protocols, and country-specific security briefings before deployment."
       },
       {
-        "id": "er2",
-        "question": "What services does my embassy provide?",
-        "answer": "Embassies provide passport services, emergency assistance, legal referrals, notary services, voting assistance, and can help during medical emergencies or natural disasters. They're your primary government connection abroad."
+        "id": "gs2",
+        "question": "How do I contact security support in an emergency?",
+        "answer": "Contact Scaffold Crisis Support at +1-978-728-3577 (1-97-TRAVEL-77) for immediate security assistance. This 24/7 hotline provides emergency evacuation, crisis communication, and security coordination."
       },
       {
-        "id": "er3",
-        "question": "How do I handle visa and legal issues?",
-        "answer": "Contact our legal assistance team immediately for any visa or legal concerns. We work with immigration lawyers and can help navigate complex legal requirements in your host country."
+        "id": "gs3",
+        "question": "What should I do in a security crisis?",
+        "answer": "Follow your emergency action plan, contact Scaffold immediately, stay calm, communicate your status and location, follow evacuation procedures if necessary, and maintain contact with security coordinators."
+      },
+      {
+        "id": "gs4",
+        "question": "How do I stay informed about security conditions?",
+        "answer": "We provide regular security updates, country risk assessments, travel advisories, and emergency notifications. Stay connected with your regional security coordinator for location-specific guidance."
       }
     ],
     "contact": {
-      "id": "legal1",
-      "name": "Robert Chen",
-      "title": "Legal Affairs Coordinator",
-      "avatar": "https://picsum.photos/100/100?random=26",
-      "phone": "+1-555-EMBASSY",
-      "email": "legal@careresources.org",
-      "department": "Legal & Immigration Services"
-    }
-  },
-  {
-    "id": "education-resources",
-    "name": "Education & Schools",
-    "description": "Navigate schooling options and educational needs for families",
-    "color": "#2160DC",
-    "icon": "school-outline",
-    "faqs": [
-      {
-        "id": "ed1",
-        "question": "What schooling options are available for expat children?",
-        "answer": "Options include international schools, local schools, homeschooling, and online programs. We can help you evaluate options based on your location, budget, language requirements, and educational goals."
-      },
-      {
-        "id": "ed2",
-        "question": "How do I ensure educational continuity when moving?",
-        "answer": "Maintain detailed academic records, choose curricula that transfer easily, consider international programs like IB, and work with our education coordinator to ensure smooth transitions between countries."
-      },
-      {
-        "id": "ed3",
-        "question": "What support is available for children with special needs?",
-        "answer": "We provide specialized support for children with learning differences, disabilities, or other special needs. This includes finding appropriate schools, therapy services, and educational accommodations in your host country."
-      }
-    ],
-    "contact": {
-      "id": "education1",
-      "name": "Dr. Emily Watson",
-      "title": "Education Services Director",
-      "avatar": "https://picsum.photos/100/100?random=27",
-      "phone": "+1-555-SCHOOL",
-      "email": "education@careresources.org",
-      "department": "Educational Services"
-    }
-  },
-  {
-    "id": "financial-guidance",
-    "name": "Financial Guidance",
-    "description": "Manage finances, taxes, and financial planning across borders",
-    "color": "#FADA5E",
-    "icon": "card-outline",
-    "faqs": [
-      {
-        "id": "fg1",
-        "question": "How do I handle taxes while living abroad?",
-        "answer": "US citizens must file taxes regardless of where they live. You may qualify for foreign earned income exclusion or tax credits. We provide tax preparation services and work with specialized expat tax professionals."
-      },
-      {
-        "id": "fg2",
-        "question": "What's the best way to manage money internationally?",
-        "answer": "Use international banking services, consider multiple currency accounts, understand exchange rates and fees, and maintain emergency funds in both home and local currencies. We can recommend trusted financial institutions."
-      },
-      {
-        "id": "fg3",
-        "question": "How do I plan for retirement while working overseas?",
-        "answer": "Continue contributing to retirement accounts, understand social security implications, consider international investment options, and plan for healthcare costs. Our financial advisors specialize in expat retirement planning."
-      }
-    ],
-    "contact": {
-      "id": "finance1",
-      "name": "Jennifer Park",
-      "title": "Financial Planning Advisor",
-      "avatar": "https://picsum.photos/100/100?random=28",
-      "phone": "+1-555-FINANCE",
-      "email": "finance@careresources.org",
-      "department": "Financial Services"
+      "id": "c6",
+      "name": "Ed Nye",
+      "title": "Global Security Coordinator",
+      "avatar": "https://picsum.photos/100/100?random=36",
+      "phone": "+1-417-862-1605",
+      "email": "edwardnye@ag.org",
+      "department": "Global Security"
     }
   }
 ]

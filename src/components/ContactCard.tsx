@@ -81,6 +81,9 @@ export const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
         {contact.department && (
           <Text style={styles.department}>{contact.department}</Text>
         )}
+        {contact.extension && (
+          <Text style={styles.department}>Ext: {contact.extension}</Text>
+        )}
       </View>
       <View style={styles.actions}>
         <TouchableOpacity

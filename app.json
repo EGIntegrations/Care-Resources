@@ -2,8 +2,8 @@
   "expo": {
     "name": "Care Resources", 
     "slug": "care-resources",
-    "version": "1.0.2",
-    "orientation": "portrait",
+    "version": "1.0.6",
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
@@ -17,7 +17,8 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.careresources.app",
-      "buildNumber": "4",
+      "buildNumber": "3",
+      "googleServicesFile": "./assets/GoogleService-Info.plist",
       "infoPlist": {
         "NSFaceIDUsageDescription": "Use Face ID or Touch ID to access your secure care resources",
         "ITSAppUsesNonExemptEncryption": false
@@ -47,6 +48,29 @@
         "expo-av",
         {
           "microphonePermission": false
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ],
+      [
+        "@react-native-firebase/app",
+        {
+          "ios": {
+            "googleServicesFile": "./assets/GoogleService-Info.plist"
+          }
+        }
+      ],
+      "@react-native-firebase/auth",
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.1041606516821-3srnqsjb1pbp0p8jsq96ma1oskefb5se"
         }
       ]
     ],

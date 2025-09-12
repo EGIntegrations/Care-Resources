@@ -273,26 +273,6 @@ const SettingsScreen: React.FC = () => {
             </View>
           </View>
 
-          <View style={[styles.settingItem, styles.lastSettingItem]}>
-            <View style={styles.settingIcon}>
-              <Ionicons name="moon-outline" size={24} color={colors.blue} />
-            </View>
-            <View style={styles.settingContent}>
-              <Text style={styles.settingTitle}>Dark Mode</Text>
-              <Text style={styles.settingDescription}>
-                Use dark theme (coming soon)
-              </Text>
-            </View>
-            <View style={styles.settingControl}>
-              <Switch
-                value={settings.darkMode}
-                onValueChange={(value) => updateSettings({ darkMode: value })}
-                trackColor={{ false: colors.grey200, true: colors.blue }}
-                thumbColor={colors.white}
-                disabled
-              />
-            </View>
-          </View>
         </View>
 
         {/* Account Section */}

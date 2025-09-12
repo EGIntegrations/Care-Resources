@@ -28,7 +28,17 @@ export interface Pathway {
 }
 
 class ApiService {
-  private async fetchData<T>(endpoint: string): Promise<T[]> {
+  private cache: Map<string, { data: any[], timestamp: number }> = new Map();
+  private readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+  private async fetchData<T>(endpoint: string, useCache: boolean = true): Promise<T[]> {
+    // Check cache first
+    if (useCache) {
+      const cached = this.cache.get(endpoint);
+      if (cached && Date.now() - cached.timestamp < this.CACHE_DURATION) {
+        return cached.data as T[];
+      }
+    }
+
     try {
       const response = await fetch(`${API_BASE_URL}${endpoint}`);
       if (!response.ok) {
@@ -37,12 +47,21 @@ class ApiService {
       const data = await response.json();
       
       // Parse Lambda response format
+      let transformedData;
       if (data.body) {
         const parsedBody = typeof data.body === 'string' ? JSON.parse(data.body) : data.body;
-        return this.transformApiData(parsedBody, endpoint);
+        transformedData = this.transformApiData(parsedBody, endpoint);
+      } else {
+        transformedData = this.transformApiData(data, endpoint);
       }
       
-      return this.transformApiData(data, endpoint);
+      // Cache the result
+      this.cache.set(endpoint, {
+        data: transformedData,
+        timestamp: Date.now()
+      });
+      
+      return transformedData;
     } catch (error) {
       console.error(`Error fetching ${endpoint}:`, error);
       throw error;
@@ -80,10 +99,13 @@ class ApiService {
       if (endpoint === '/pathways') {
         return {
           id: item['expat-pathways'] || item.id || 'unknown',
-          title: item.title || 'Pathway',
+          title: item.title || item.name || 'Pathway',
           color: item.color || '#2160DC',
           icon: item.icon || 'help-circle',
-          description: item.description || ''
+          description: item.description || '',
+          name: item.name || item.title || 'Pathway',
+          faqs: item.faqs || [],
+          contact: item.contact || null
         } as T;
       }
       

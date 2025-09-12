@@ -6,6 +6,8 @@ import {
   FlatList,
   RefreshControl,
   SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -21,21 +23,46 @@ const VideosScreen: React.FC = () => {
   const navigation = useNavigation<VideosScreenNavigationProp>();
   const { colors, fonts, spacing } = useTheme();
   const [videos, setVideos] = useState<Video[]>([]);
+  const [filteredVideos, setFilteredVideos] = useState<Video[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [refreshing, setRefreshing] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const categories = ['All', 'Security Briefs', 'Mental Health', 'Crisis Care', 'Family', 'Community', 'General'];
 
   useEffect(() => {
     loadVideos();
   }, []);
 
+  useEffect(() => {
+    if (selectedCategory === 'All') {
+      setFilteredVideos(videos);
+    } else {
+      setFilteredVideos(videos.filter(video => video.category === selectedCategory));
+    }
+  }, [videos, selectedCategory]);
+
   const loadVideos = async () => {
     try {
-      const videosFromApi = await apiService.getVideos();
-      setVideos(videosFromApi);
-    } catch (error) {
-      console.error('Error loading videos:', error);
-      // Fallback to local data if API fails
+      // Load local data first for immediate display
       const localVideos = require('../../data/videos.json');
       setVideos(localVideos);
+      setFilteredVideos(localVideos);
+      setLoading(false);
+      
+      // Then try to sync with API in background
+      try {
+        const videosFromApi = await apiService.getVideos();
+        if (videosFromApi.length > 0) {
+          setVideos(videosFromApi);
+          setFilteredVideos(videosFromApi);
+        }
+      } catch (apiError) {
+        console.log('API sync failed, using local data:', apiError);
+      }
+    } catch (error) {
+      console.error('Error loading videos:', error);
+      setLoading(false);
     }
   };
 
@@ -76,8 +103,37 @@ const VideosScreen: React.FC = () => {
       backgroundColor: colors.grey100,
       padding: spacing[2],
     },
+    categorySection: {
+      paddingHorizontal: spacing[2],
+      paddingVertical: spacing[3],
+    },
+    categoryScroll: {
+      paddingHorizontal: spacing[1],
+    },
+    categoryButton: {
+      paddingHorizontal: spacing[3],
+      paddingVertical: spacing[2],
+      marginHorizontal: spacing[1],
+      borderRadius: 20,
+      backgroundColor: colors.white,
+      borderWidth: 1,
+      borderColor: colors.grey300,
+    },
+    activeCategoryButton: {
+      backgroundColor: colors.blue,
+      borderColor: colors.blue,
+    },
+    categoryButtonText: {
+      fontSize: fonts.small,
+      color: colors.grey700,
+      fontWeight: '500',
+    },
+    activeCategoryButtonText: {
+      color: colors.white,
+    },
     list: {
       flex: 1,
+      paddingTop: spacing[2],
     },
     emptyContainer: {
       flex: 1,
@@ -87,8 +143,9 @@ const VideosScreen: React.FC = () => {
     },
     emptyText: {
       fontSize: fonts.body,
-      color: colors.grey700,
+      color: colors.navy,
       textAlign: 'center',
+      fontWeight: '600',
     },
   });
 
@@ -99,14 +156,44 @@ const VideosScreen: React.FC = () => {
       </View>
       
       <View style={styles.content}>
-        {videos.length === 0 ? (
+        <View style={styles.categorySection}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.categoryScroll}
+          >
+            {categories.map((category) => (
+              <TouchableOpacity
+                key={category}
+                style={[
+                  styles.categoryButton,
+                  selectedCategory === category && styles.activeCategoryButton
+                ]}
+                onPress={() => setSelectedCategory(category)}
+              >
+                <Text style={[
+                  styles.categoryButtonText,
+                  selectedCategory === category && styles.activeCategoryButtonText
+                ]}>
+                  {category}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
+        
+        {loading ? (
           <View style={styles.emptyContainer}>
-            <Text style={styles.emptyText}>No videos available</Text>
+            <Text style={styles.emptyText}>Loading videos...</Text>
+          </View>
+        ) : filteredVideos.length === 0 ? (
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>No videos available in {selectedCategory}</Text>
           </View>
         ) : (
           <FlatList
             style={styles.list}
-            data={videos}
+            data={filteredVideos}
             renderItem={renderVideoItem}
             keyExtractor={(item) => item.id}
             numColumns={2}

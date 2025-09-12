@@ -22,52 +22,76 @@ const ContactsScreen: React.FC = () => {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [showPasscodeModal, setShowPasscodeModal] = useState(false);
   const [biometricAvailable, setBiometricAvailable] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    checkBiometricAvailability();
-    if (settings.contactsUnlocked) {
-      loadContacts();
-    } else {
-      attemptBiometricAuth();
-    }
+    const initializeScreen = async () => {
+      await checkBiometricAvailability();
+      if (settings.contactsUnlocked) {
+        await loadContacts();
+      }
+      // Don't auto-attempt auth, let user see the UI first
+    };
+    initializeScreen();
   }, [settings.contactsUnlocked]);
 
   const checkBiometricAvailability = async () => {
-    const compatible = await LocalAuthentication.hasHardwareAsync();
-    const enrolled = await LocalAuthentication.isEnrolledAsync();
-    setBiometricAvailable(compatible && enrolled);
+    try {
+      const compatible = await LocalAuthentication.hasHardwareAsync();
+      const enrolled = await LocalAuthentication.isEnrolledAsync();
+      const available = compatible && enrolled;
+      setBiometricAvailable(available);
+      console.log('Biometric availability:', { compatible, enrolled, available });
+    } catch (error) {
+      console.error('Error checking biometric availability:', error);
+      setBiometricAvailable(false);
+    }
   };
 
   const attemptBiometricAuth = async () => {
-    if (biometricAvailable && settings.biometricEnabled) {
-      try {
-        const result = await LocalAuthentication.authenticateAsync({
-          promptMessage: 'Access secure contact directory',
-          cancelLabel: 'Use Passcode',
-          disableDeviceFallback: false,
-        });
-
-        if (result.success) {
-          updateSettings({ contactsUnlocked: true });
-          return;
-        }
-      } catch (error) {
-        console.error('Biometric auth error:', error);
-      }
+    if (!biometricAvailable) {
+      setShowPasscodeModal(true);
+      return;
     }
     
-    setShowPasscodeModal(true);
+    try {
+      const result = await LocalAuthentication.authenticateAsync({
+        promptMessage: 'Access secure contact directory',
+        cancelLabel: 'Use Passcode',
+        disableDeviceFallback: false,
+      });
+
+      if (result.success) {
+        updateSettings({ contactsUnlocked: true });
+      } else {
+        // User cancelled biometric, show passcode modal
+        setShowPasscodeModal(true);
+      }
+    } catch (error) {
+      console.error('Biometric auth error:', error);
+      setShowPasscodeModal(true);
+    }
   };
 
   const loadContacts = async () => {
     try {
-      const contactsFromApi = await apiService.getContacts();
-      setContacts(contactsFromApi);
-    } catch (error) {
-      console.error('Error loading contacts:', error);
-      // Fallback to local data if API fails
+      // Load local data first for immediate display
       const localContacts = require('../../data/contacts.json');
       setContacts(localContacts);
+      setLoading(false);
+      
+      // Then try to sync with API in background
+      try {
+        const contactsFromApi = await apiService.getContacts();
+        if (contactsFromApi.length > 0) {
+          setContacts(contactsFromApi);
+        }
+      } catch (apiError) {
+        console.log('API sync failed, using local data:', apiError);
+      }
+    } catch (error) {
+      console.error('Error loading contacts:', error);
+      setLoading(false);
     }
   };
 
@@ -82,7 +106,11 @@ const ContactsScreen: React.FC = () => {
   };
 
   const handleRetryBiometric = () => {
-    attemptBiometricAuth();
+    if (biometricAvailable) {
+      attemptBiometricAuth();
+    } else {
+      setShowPasscodeModal(true);
+    }
   };
 
   const renderContactItem = ({ item }: { item: Contact }) => (
@@ -113,10 +141,11 @@ const ContactsScreen: React.FC = () => {
     },
     description: {
       fontSize: fonts.body,
-      color: colors.grey700,
+      color: colors.white,
       textAlign: 'center',
       marginBottom: spacing[4],
       lineHeight: 22,
+      fontWeight: '600',
     },
     list: {
       flex: 1,
@@ -129,8 +158,9 @@ const ContactsScreen: React.FC = () => {
     },
     emptyText: {
       fontSize: fonts.body,
-      color: colors.grey700,
+      color: colors.navy,
       textAlign: 'center',
+      fontWeight: '600',
     },
     lockedContainer: {
       flex: 1,
@@ -140,9 +170,10 @@ const ContactsScreen: React.FC = () => {
     },
     lockedText: {
       fontSize: fonts.body,
-      color: colors.grey700,
+      color: colors.white,
       textAlign: 'center',
       marginBottom: spacing[4],
+      fontWeight: '600',
     },
     biometricButton: {
       alignItems: 'center',
@@ -174,16 +205,16 @@ const ContactsScreen: React.FC = () => {
             Please authenticate to access.
           </Text>
           
-          {biometricAvailable && (
-            <TouchableOpacity
-              style={styles.biometricButton}
-              onPress={handleRetryBiometric}
-              activeOpacity={0.7}
-            >
-              <Ionicons name="finger-print" size={32} color={colors.blue} />
-              <Text style={styles.biometricButtonText}>Use Biometric Authentication</Text>
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity
+            style={styles.biometricButton}
+            onPress={handleRetryBiometric}
+            activeOpacity={0.7}
+          >
+            <Ionicons name="finger-print" size={32} color={colors.blue} />
+            <Text style={styles.biometricButtonText}>
+              {biometricAvailable ? 'Use Biometric Authentication' : 'Use Passcode'}
+            </Text>
+          </TouchableOpacity>
         </View>
 
         <PasscodeModal
@@ -209,7 +240,11 @@ const ContactsScreen: React.FC = () => {
           Tap to call or email directly.
         </Text>
         
-        {contacts.length === 0 ? (
+        {loading ? (
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>Loading contacts...</Text>
+          </View>
+        ) : contacts.length === 0 ? (
           <View style={styles.emptyContainer}>
             <Text style={styles.emptyText}>No contacts available</Text>
           </View>

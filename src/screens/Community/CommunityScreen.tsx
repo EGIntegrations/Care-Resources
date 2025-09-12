@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -6,11 +6,12 @@ import {
   ScrollView,
   TouchableOpacity,
   SafeAreaView,
-  Image,
   Linking,
+  RefreshControl,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../../theme/ThemeProvider';
+import { eventsService, Event } from '../../services/EventsService';
 
 interface CommunityEvent {
   id: string;
@@ -21,67 +22,34 @@ interface CommunityEvent {
   description: string;
 }
 
-interface CommunityGroup {
-  id: string;
-  name: string;
-  description: string;
-  image: string;
-  memberCount: number;
-}
-
-const upcomingEvents: CommunityEvent[] = [
-  {
-    id: 'e1',
-    title: 'Expat Family Webinar',
-    date: '2024-02-15',
-    time: '7:00 PM EST',
-    location: 'Virtual',
-    description: 'Supporting children through cultural transitions',
-  },
-  {
-    id: 'e2',
-    title: 'Regional Prayer Meeting',
-    date: '2024-02-20',
-    time: '9:00 AM EST',
-    location: 'Virtual',
-    description: 'Monthly prayer and fellowship time',
-  },
-  {
-    id: 'e3',
-    title: 'Mental Health Workshop',
-    date: '2024-02-25',
-    time: '2:00 PM EST',
-    location: 'Virtual',
-    description: 'Building resilience while serving abroad',
-  },
-];
-
-const localGroups: CommunityGroup[] = [
-  {
-    id: 'g1',
-    name: 'European Expats',
-    description: 'Connect with families serving across Europe',
-    image: 'https://picsum.photos/150/100?random=41',
-    memberCount: 45,
-  },
-  {
-    id: 'g2',
-    name: 'Asian Ministry Network',
-    description: 'Support network for Asian ministry families',
-    image: 'https://picsum.photos/150/100?random=42',
-    memberCount: 32,
-  },
-  {
-    id: 'g3',
-    name: 'Africa Connect',
-    description: 'Serving families across the African continent',
-    image: 'https://picsum.photos/150/100?random=43',
-    memberCount: 28,
-  },
-];
 
 const CommunityScreen: React.FC = () => {
   const { colors, fonts, spacing, radii, shadows } = useTheme();
+  const [events, setEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    loadEvents();
+  }, []);
+
+  const loadEvents = async () => {
+    try {
+      const upcomingEvents = await eventsService.getUpcomingEvents();
+      setEvents(upcomingEvents);
+    } catch (error) {
+      console.error('Error loading events:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    eventsService.clearCache();
+    await loadEvents();
+    setRefreshing(false);
+  };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -92,9 +60,6 @@ const CommunityScreen: React.FC = () => {
     });
   };
 
-  const handleVisitForum = () => {
-    Linking.openURL('https://community.agwm.org');
-  };
 
   const styles = StyleSheet.create({
     container: {
@@ -123,14 +88,16 @@ const CommunityScreen: React.FC = () => {
     sectionTitle: {
       fontSize: fonts.h2,
       fontWeight: '600',
-      color: colors.grey700,
+      color: colors.white,
       marginBottom: spacing[4],
     },
     eventCard: {
-      backgroundColor: colors.white,
+      backgroundColor: colors.navy,
       borderRadius: radii.md,
       padding: spacing[4],
       marginBottom: spacing[3],
+      borderWidth: 1,
+      borderColor: colors.blue,
       shadowColor: '#000',
       shadowOffset: {
         width: 0,
@@ -149,13 +116,13 @@ const CommunityScreen: React.FC = () => {
     eventTitle: {
       fontSize: fonts.body,
       fontWeight: '600',
-      color: colors.grey700,
+      color: colors.white,
       flex: 1,
       marginRight: spacing[2],
     },
     eventDate: {
       fontSize: fonts.small,
-      color: colors.blue,
+      color: colors.yellow,
       fontWeight: '600',
     },
     eventDetails: {
@@ -165,145 +132,102 @@ const CommunityScreen: React.FC = () => {
     },
     eventTime: {
       fontSize: fonts.small,
-      color: colors.grey700,
+      color: colors.white,
       marginRight: spacing[3],
     },
     eventLocation: {
       fontSize: fonts.small,
-      color: colors.grey700,
+      color: colors.white,
       marginLeft: spacing[1],
     },
     eventDescription: {
       fontSize: fonts.small,
-      color: colors.grey700,
+      color: colors.white,
       opacity: 0.8,
-    },
-    groupsContainer: {
-      paddingHorizontal: spacing[4],
-    },
-    groupsList: {
-      flexDirection: 'row',
-      marginBottom: spacing[4],
-    },
-    groupCard: {
-      backgroundColor: colors.white,
-      borderRadius: radii.md,
-      padding: spacing[3],
-      marginRight: spacing[3],
-      width: 150,
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 1,
-      },
-      shadowOpacity: 0.18,
-      shadowRadius: 1.0,
-      elevation: 1,
-    },
-    groupImage: {
-      width: '100%',
-      height: 80,
-      borderRadius: radii.sm,
       marginBottom: spacing[2],
     },
-    groupName: {
+    registerSection: {
+      marginTop: spacing[2],
+      paddingTop: spacing[2],
+      borderTopWidth: 1,
+      borderTopColor: colors.blue,
+    },
+    registerText: {
       fontSize: fonts.small,
-      fontWeight: '600',
-      color: colors.grey700,
-      marginBottom: spacing[1],
-    },
-    groupDescription: {
-      fontSize: 12,
-      color: colors.grey700,
-      opacity: 0.8,
-      marginBottom: spacing[1],
-    },
-    memberCount: {
-      fontSize: 12,
       color: colors.blue,
+      fontWeight: '600',
+      textAlign: 'center',
+    },
+    loadingText: {
+      fontSize: fonts.body,
+      color: colors.white,
+      textAlign: 'center',
       fontWeight: '500',
     },
-    forumSection: {
-      padding: spacing[4],
-    },
-    forumButton: {
-      backgroundColor: colors.blue,
-      borderRadius: radii.md,
-      padding: spacing[4],
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
-    },
-    forumButtonText: {
-      fontSize: fonts.h3,
-      fontWeight: '600',
+    emptyText: {
+      fontSize: fonts.body,
       color: colors.white,
-      marginLeft: spacing[2],
+      textAlign: 'center',
+      fontWeight: '500',
     },
   });
 
   return (
     <View style={styles.container}><SafeAreaView style={styles.safeArea} />
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Community</Text>
+        <Text style={styles.headerTitle}>Events</Text>
       </View>
 
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+      <ScrollView 
+        style={styles.content} 
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+        }
+      >
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Upcoming Events</Text>
-          {upcomingEvents.map((event) => (
-            <View key={event.id} style={styles.eventCard}>
+          {loading ? (
+            <Text style={styles.loadingText}>Loading events...</Text>
+          ) : events.length === 0 ? (
+            <Text style={styles.emptyText}>No new events at this time</Text>
+          ) : (
+            events.map((event) => (
+            <TouchableOpacity 
+              key={event.id} 
+              style={styles.eventCard}
+              onPress={() => {
+                if (event.registrationUrl) {
+                  Linking.openURL(event.registrationUrl);
+                }
+              }}
+              activeOpacity={0.8}
+            >
               <View style={styles.eventHeader}>
                 <Text style={styles.eventTitle}>{event.title}</Text>
                 <Text style={styles.eventDate}>{formatDate(event.date)}</Text>
               </View>
               
               <View style={styles.eventDetails}>
-                <Ionicons name="time-outline" size={14} color={colors.grey700} />
+                <Ionicons name="time-outline" size={14} color={colors.white} />
                 <Text style={styles.eventTime}>{event.time}</Text>
-                <Ionicons name="location-outline" size={14} color={colors.grey700} />
+                <Ionicons name="location-outline" size={14} color={colors.white} />
                 <Text style={styles.eventLocation}>{event.location}</Text>
               </View>
               
               <Text style={styles.eventDescription}>{event.description}</Text>
-            </View>
-          ))}
-        </View>
-
-        <View style={styles.groupsContainer}>
-          <Text style={styles.sectionTitle}>Local Groups</Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <View style={styles.groupsList}>
-              {localGroups.map((group) => (
-                <View key={group.id} style={styles.groupCard}>
-                  <Image source={{ uri: group.image }} style={styles.groupImage} />
-                  <Text style={styles.groupName}>{group.name}</Text>
-                  <Text style={styles.groupDescription}>{group.description}</Text>
-                  <Text style={styles.memberCount}>{group.memberCount} members</Text>
+              
+              {event.registrationUrl && (
+                <View style={styles.registerSection}>
+                  <Text style={styles.registerText}>Tap to register →</Text>
                 </View>
-              ))}
-            </View>
-          </ScrollView>
+              )}
+            </TouchableOpacity>
+            ))
+          )}
         </View>
 
-        <View style={styles.forumSection}>
-          <TouchableOpacity
-            style={styles.forumButton}
-            onPress={handleVisitForum}
-            activeOpacity={0.8}
-          >
-            <Ionicons name="globe-outline" size={24} color={colors.white} />
-            <Text style={styles.forumButtonText}>Visit Community Forum</Text>
-          </TouchableOpacity>
-        </View>
+
       </ScrollView>
     </View>
   );

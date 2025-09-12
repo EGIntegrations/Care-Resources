@@ -22,6 +22,7 @@ export interface Contact {
   phone: string;
   email: string;
   department?: string;
+  extension?: string;
 }
 
 export interface Pathway {

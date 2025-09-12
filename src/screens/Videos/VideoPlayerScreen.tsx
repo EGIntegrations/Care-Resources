@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   SafeAreaView,
   StatusBar,
+  Modal,
+  Dimensions,
 } from 'react-native';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { Video } from 'expo-av';
@@ -24,6 +26,8 @@ const VideoPlayerScreen: React.FC = () => {
   const videoRef = useRef<Video>(null);
   const [status, setStatus] = useState<any>({});
   const [showControls, setShowControls] = useState(true);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
 
   const togglePlayback = () => {
     if (status.isLoaded) {
@@ -44,6 +48,7 @@ const VideoPlayerScreen: React.FC = () => {
     setShowControls(!showControls);
   };
 
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -52,9 +57,24 @@ const VideoPlayerScreen: React.FC = () => {
     videoContainer: {
       flex: 1,
       justifyContent: 'center',
+      alignItems: 'center',
+      padding: spacing[4],
     },
     video: {
-      flex: 1,
+      width: '90%',
+      height: 250,
+      borderRadius: 8,
+      backgroundColor: '#000',
+      borderWidth: 2,
+      borderColor: colors.white,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 4,
+      },
+      shadowOpacity: 0.3,
+      shadowRadius: 6,
+      elevation: 8,
     },
     overlay: {
       position: 'absolute',
@@ -128,6 +148,39 @@ const VideoPlayerScreen: React.FC = () => {
       fontWeight: '600',
       marginTop: spacing[2],
     },
+    expandButton: {
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      borderRadius: 15,
+      padding: spacing[2],
+    },
+    // Fullscreen modal styles
+    fullscreenModal: {
+      flex: 1,
+      backgroundColor: '#000',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    fullscreenVideo: {
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').height,
+    },
+    fullscreenOverlay: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'transparent',
+    },
+    fullscreenCloseButton: {
+      position: 'absolute',
+      top: 50,
+      right: 20,
+      backgroundColor: 'rgba(0, 0, 0, 0.7)',
+      borderRadius: 20,
+      padding: 10,
+      zIndex: 1000,
+    },
   });
 
   return (
@@ -143,7 +196,12 @@ const VideoPlayerScreen: React.FC = () => {
           resizeMode="contain"
           isLooping={false}
           onPlaybackStatusUpdate={setStatus}
-          shouldPlay
+          shouldPlay={false}
+          onError={(error) => {
+            console.error('Video error:', error);
+            console.error('Video URL:', video.url);
+          }}
+          onLoad={() => console.log('Video loaded:', video.url)}
         />
         
         <View style={styles.overlay}>
@@ -162,6 +220,18 @@ const VideoPlayerScreen: React.FC = () => {
               </Text>
               <Text style={styles.videoDuration}>{video.duration}</Text>
             </View>
+            
+            <TouchableOpacity
+              style={styles.expandButton}
+              onPress={() => setIsFullscreen(true)}
+              activeOpacity={0.7}
+            >
+              <Ionicons 
+                name="expand" 
+                size={20} 
+                color={colors.white} 
+              />
+            </TouchableOpacity>
           </View>
 
           {!status.isPlaying && (
@@ -186,6 +256,39 @@ const VideoPlayerScreen: React.FC = () => {
           )}
         </View>
       </TouchableOpacity>
+
+      <Modal
+        visible={isFullscreen}
+        animationType="slide"
+        presentationStyle="fullScreen"
+        statusBarHidden={true}
+        supportedOrientations={['portrait', 'landscape']}
+        onRequestClose={() => setIsFullscreen(false)}
+      >
+        <View style={styles.fullscreenModal}>
+          <Video
+            ref={videoRef}
+            style={styles.fullscreenVideo}
+            source={{ uri: video.url }}
+            useNativeControls={false}
+            resizeMode="contain"
+            isLooping={false}
+            shouldPlay={true}
+            onPlaybackStatusUpdate={setStatus}
+          />
+          
+          <View style={styles.fullscreenOverlay}>
+            <TouchableOpacity
+              style={styles.fullscreenCloseButton}
+              onPress={() => setIsFullscreen(false)}
+              activeOpacity={0.7}
+            >
+              <Ionicons name="close" size={24} color="white" />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
     </SafeAreaView>
   );
 };

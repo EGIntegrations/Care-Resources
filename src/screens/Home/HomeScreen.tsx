@@ -19,7 +19,7 @@ type HomeScreenNavigationProp = BottomTabNavigationProp<BottomTabParamList>;
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const { colors, fonts, spacing, radii, shadows } = useTheme();
-  const [showAllQuickAccess, setShowAllQuickAccess] = useState(false);
+  const [showAllQuickAccess, setShowAllQuickAccess] = useState(true);
 
   const styles = StyleSheet.create({
     container: {
@@ -31,8 +31,10 @@ const HomeScreen: React.FC = () => {
     },
     header: {
       backgroundColor: '#051838',
-      padding: spacing[4],
+      paddingHorizontal: spacing[4],
+      paddingVertical: spacing[2],
       alignItems: 'center',
+      minHeight: 60,
     },
     content: {
       flex: 1,
@@ -107,7 +109,7 @@ const HomeScreen: React.FC = () => {
     sectionTitle: {
       fontSize: fonts.h2,
       fontWeight: '600',
-      color: colors.grey700,
+      color: colors.navy,
     },
     quickLinksGrid: {
       flexDirection: 'row',
@@ -149,7 +151,7 @@ const HomeScreen: React.FC = () => {
     <View style={styles.container}>
       <SafeAreaView style={styles.safeArea} />
       <View style={styles.header}>
-        <Logo size={280} />
+        <Logo size={180} />
       </View>
       
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
@@ -196,18 +198,6 @@ const HomeScreen: React.FC = () => {
           <View style={styles.quickLinksGrid}>
             <TouchableOpacity
               style={styles.quickLinkCard}
-              onPress={() => navigation.navigate('CommunityStack')}
-              activeOpacity={0.7}
-            >
-              <Ionicons name="globe-outline" size={24} color={colors.blue} style={{ marginBottom: spacing[1] }} />
-              <Text style={styles.quickLinkTitle}>Community</Text>
-              <Text style={styles.quickLinkDescription}>
-                Events & Groups
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.quickLinkCard}
               onPress={() => navigation.navigate('ContactsStack')}
               activeOpacity={0.7}
             >
@@ -215,6 +205,21 @@ const HomeScreen: React.FC = () => {
               <Text style={styles.quickLinkTitle}>Contacts</Text>
               <Text style={styles.quickLinkDescription}>
                 Support Network
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.quickLinkCard}
+              onPress={() => navigation.navigate('CareStack', { 
+                screen: 'CarePathwayDetails', 
+                params: { pathwayId: 'tck-care' } 
+              })}
+              activeOpacity={0.7}
+            >
+              <Ionicons name="people-outline" size={24} color={colors.blue} style={{ marginBottom: spacing[1] }} />
+              <Text style={styles.quickLinkTitle}>TCK Care</Text>
+              <Text style={styles.quickLinkDescription}>
+                Family & Education
               </Text>
             </TouchableOpacity>
 
@@ -246,19 +251,25 @@ const HomeScreen: React.FC = () => {
 
                 <TouchableOpacity
                   style={styles.quickLinkCard}
-                  onPress={() => navigation.navigate('CareStack')}
+                  onPress={() => navigation.navigate('CareStack', { 
+                    screen: 'CarePathwayDetails', 
+                    params: { pathwayId: 'wellness' } 
+                  })}
                   activeOpacity={0.7}
                 >
-                  <Ionicons name="medical-outline" size={24} color={colors.blue} style={{ marginBottom: spacing[1] }} />
-                  <Text style={styles.quickLinkTitle}>Medical Care</Text>
+                  <Ionicons name="leaf-outline" size={24} color={colors.blue} style={{ marginBottom: spacing[1] }} />
+                  <Text style={styles.quickLinkTitle}>Wellness</Text>
                   <Text style={styles.quickLinkDescription}>
-                    Health Support
+                    Reentry & Life Support
                   </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={styles.quickLinkCard}
-                  onPress={() => navigation.navigate('CareStack')}
+                  onPress={() => navigation.navigate('CareStack', { 
+                    screen: 'CarePathwayDetails', 
+                    params: { pathwayId: 'mental-health' } 
+                  })}
                   activeOpacity={0.7}
                 >
                   <Ionicons name="heart-outline" size={24} color={colors.blue} style={{ marginBottom: spacing[1] }} />
@@ -270,25 +281,28 @@ const HomeScreen: React.FC = () => {
 
                 <TouchableOpacity
                   style={styles.quickLinkCard}
-                  onPress={() => navigation.navigate('CareStack')}
+                  onPress={() => navigation.navigate('CareStack', { 
+                    screen: 'CarePathwayDetails', 
+                    params: { pathwayId: 'global-security' } 
+                  })}
                   activeOpacity={0.7}
                 >
-                  <Ionicons name="document-text-outline" size={24} color={colors.blue} style={{ marginBottom: spacing[1] }} />
-                  <Text style={styles.quickLinkTitle}>Embassy Info</Text>
+                  <Ionicons name="shield-outline" size={24} color={colors.blue} style={{ marginBottom: spacing[1] }} />
+                  <Text style={styles.quickLinkTitle}>Global Security</Text>
                   <Text style={styles.quickLinkDescription}>
-                    Legal & Visa Help
+                    Safety & Crisis Support
                   </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={styles.quickLinkCard}
-                  onPress={() => navigation.navigate('CareStack')}
+                  onPress={() => navigation.navigate('CommunityStack')}
                   activeOpacity={0.7}
                 >
-                  <Ionicons name="school-outline" size={24} color={colors.blue} style={{ marginBottom: spacing[1] }} />
-                  <Text style={styles.quickLinkTitle}>Education</Text>
+                  <Ionicons name="calendar-outline" size={24} color={colors.blue} style={{ marginBottom: spacing[1] }} />
+                  <Text style={styles.quickLinkTitle}>Events</Text>
                   <Text style={styles.quickLinkDescription}>
-                    School Resources
+                    Upcoming Events
                   </Text>
                 </TouchableOpacity>
               </>

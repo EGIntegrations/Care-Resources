@@ -12,6 +12,7 @@ import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../../theme/ThemeProvider';
 import { Accordion } from '../../components/Accordion';
+import { EmergencyCard } from '../../components/EmergencyCard';
 import { CareStackParamList } from '../../navigation/stacks/CareStack';
 
 type PathwayDetailScreenRouteProp = RouteProp<CareStackParamList, 'PathwayDetail'>;
@@ -177,7 +178,18 @@ const PathwayDetailScreen: React.FC = () => {
         </View>
       </View>
 
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+      <ScrollView 
+        style={styles.content} 
+        showsVerticalScrollIndicator={false}
+        contentInsetAdjustmentBehavior="automatic"
+      >
+        {/* Show emergency card for Crisis Care pathway */}
+        {pathway.id === 'crisis-care' && (
+          <View style={{ marginBottom: spacing[4] }}>
+            <EmergencyCard />
+          </View>
+        )}
+
         <View style={styles.faqSection}>
           <Text style={styles.sectionTitle}>Frequently Asked Questions</Text>
           {pathway.faqs.map((faq, index) => (
@@ -205,25 +217,14 @@ const PathwayDetailScreen: React.FC = () => {
               )}
             </View>
 
-            <View style={styles.contactButtons}>
-              <TouchableOpacity
-                style={[styles.contactButton, styles.callButton]}
-                onPress={handleCall}
-                activeOpacity={0.7}
-              >
-                <Ionicons name="call" size={18} color={colors.white} />
-                <Text style={styles.contactButtonText}>Contact Now</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={[styles.contactButton, styles.emailButton]}
-                onPress={handleEmail}
-                activeOpacity={0.7}
-              >
-                <Ionicons name="mail" size={18} color={colors.white} />
-                <Text style={styles.contactButtonText}>Send Email</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+              style={[styles.contactButton, styles.emailButton]}
+              onPress={handleEmail}
+              activeOpacity={0.7}
+            >
+              <Ionicons name="mail" size={18} color={colors.white} />
+              <Text style={styles.contactButtonText}>Send Email</Text>
+            </TouchableOpacity>
           </View>
         )}
       </ScrollView>

@@ -1,74 +1,72 @@
 [
   {
     "id": "c1",
-    "name": "Rev. David Johnson",
-    "title": "Regional Director - Europe",
+    "name": "Aaron Santmyire",
+    "title": "Member Care Director",
     "avatar": "https://picsum.photos/100/100?random=31",
-    "phone": "+41-79-123-4567",
-    "email": "david.johnson@careresources.org",
-    "department": "Regional Leadership"
+    "phone": "+1-417-862-1606",
+    "email": "asantmyire@ag.org",
+    "department": "Member Care",
+    "extension": "1606"
   },
   {
     "id": "c2", 
-    "name": "Dr. Sarah Martinez",
-    "title": "Licensed Clinical Counselor",
+    "name": "Kerry Marsh",
+    "title": "Mental Health Coordinator",
     "avatar": "https://picsum.photos/100/100?random=32",
-    "phone": "+1-555-MENTAL",
-    "email": "sarah.martinez@careresources.org", 
-    "department": "Mental Health Services"
+    "phone": "+1-417-862-1603",
+    "email": "kmarsh@ag.org", 
+    "department": "Mental Health Services",
+    "extension": "1603"
   },
   {
     "id": "c3",
-    "name": "Maria Rodriguez",
-    "title": "Family Life Coordinator", 
+    "name": "Wendy Wright",
+    "title": "TCK Program Coordinator", 
     "avatar": "https://picsum.photos/100/100?random=33",
-    "phone": "+1-555-FAMILY",
-    "email": "family@careresources.org",
-    "department": "Family Services"
+    "phone": "+1-417-862-2040",
+    "email": "wwright@ag.org",
+    "department": "Family Services",
+    "extension": "2040"
   },
   {
     "id": "c4",
-    "name": "Dr. James Thompson", 
-    "title": "Medical Services Coordinator",
+    "name": "Cara Tyler", 
+    "title": "Child Safety Coordinator",
     "avatar": "https://picsum.photos/100/100?random=34",
-    "phone": "+1-555-MEDICAL",
-    "email": "medical@careresources.org",
-    "department": "Medical Services"
+    "phone": "+1-417-862-1601",
+    "email": "agwmchildsafety@ag.org",
+    "department": "Child Safety",
+    "extension": "1601"
   },
   {
     "id": "c5",
-    "name": "Pastor Michael Chen",
-    "title": "Regional Director - Asia",
+    "name": "Ed Nye",
+    "title": "Global Security Coordinator",
     "avatar": "https://picsum.photos/100/100?random=35", 
-    "phone": "+65-9123-4567",
-    "email": "michael.chen@careresources.org",
-    "department": "Regional Leadership"
+    "phone": "+1-417-862-1605",
+    "email": "edwardnye@ag.org",
+    "department": "Global Security",
+    "extension": "1605"
   },
   {
     "id": "c6",
-    "name": "Lisa Williams",
-    "title": "Member Care Coordinator",
+    "name": "Lana Uskokovich",
+    "title": "Administrative Coordinator",
     "avatar": "https://picsum.photos/100/100?random=36",
-    "phone": "+1-555-CARE-123",
-    "email": "lisa.williams@careresources.org",
-    "department": "Member Care"
+    "phone": "+1-417-862-1601",
+    "email": "luskokovich@ag.org",
+    "department": "Administration",
+    "extension": "1601"
   },
   {
     "id": "c7", 
-    "name": "Crisis Support Team",
-    "title": "24/7 Crisis Hotline",
+    "name": "Rachel Lecocq",
+    "title": "Ministry/Security Coordinator",
     "avatar": "https://picsum.photos/100/100?random=37",
-    "phone": "+1-800-CRISIS-1",
-    "email": "crisis@careresources.org",
-    "department": "Crisis Intervention"
-  },
-  {
-    "id": "c8",
-    "name": "Rev. Patricia Adams",
-    "title": "Regional Director - Africa", 
-    "avatar": "https://picsum.photos/100/100?random=38",
-    "phone": "+27-82-123-4567",
-    "email": "patricia.adams@careresources.org",
-    "department": "Regional Leadership"
+    "phone": "+1-417-862-1602",
+    "email": "rlecocq@ag.org",
+    "department": "Ministry & Security",
+    "extension": "1602"
   }
 ]

@@ -6,7 +6,9 @@ export const colors = {
   orange: '#E28A2B',      // Family Support card footer / alerts
   grey100: '#F5F5F5',     // light bg
   grey200: '#EEEEEE',     // borders
+  grey300: '#D1D5DB',     // medium borders
   grey700: '#424242',     // body text
+  grey800: '#1F2937',     // dark text
   white: '#FFFFFF',
   danger: '#D32F2F',
 };
