@@ -36,7 +36,6 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
   const configureGoogleSignIn = () => {
     GoogleSignin.configure({
       webClientId: '1041606516821-3srnqsjb1pbp0p8jsq96ma1oskefb5se.apps.googleusercontent.com',
-      iosClientId: '1041606516821-3srnqsjb1pbp0p8jsq96ma1oskefb5se.apps.googleusercontent.com',
     });
   };
 
@@ -69,16 +68,19 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
   const handleGoogleLogin = async () => {
     setIsLoading(true);
     try {
-      // Check if your device supports Google Play
+      // Check if device supports Google Play Services (Android) or just continue (iOS)
       await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
       
-      // Get the user's ID token
-      const { idToken } = await GoogleSignin.signIn();
-
+      // Sign in and get user info
+      const userInfo = await GoogleSignin.signIn();
+      
+      // Get the ID token from the user info
+      const { idToken } = userInfo;
+      
       // Create a Google credential with the token
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
-      // Sign-in the user with the credential
+      // Sign-in the user with Firebase
       const userCredential = await auth().signInWithCredential(googleCredential);
       
       console.log('User signed in with Google:', userCredential.user.email);
@@ -89,12 +91,16 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
     } catch (error) {
       console.error('Google sign-in error:', error);
       
+      // Handle specific error cases
       if (error.code === 'auth/operation-not-allowed') {
         Alert.alert('Error', 'Google sign-in is not enabled for this app.');
       } else if (error.code === 'auth/invalid-credential') {
         Alert.alert('Error', 'Invalid Google credentials. Please try again.');
+      } else if (error.code === '-5') {
+        // User cancelled the sign-in
+        console.log('User cancelled Google sign-in');
       } else {
-        Alert.alert('Sign-In Error', 'Failed to sign in with Google. Please try again.');
+        Alert.alert('Sign-In Error', `Failed to sign in with Google: ${error.message}`);
       }
     } finally {
       setIsLoading(false);

@@ -17,7 +17,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.careresources.app",
-      "buildNumber": "4",
+      "buildNumber": "5",
       "googleServicesFile": "./assets/GoogleService-Info.plist",
       "infoPlist": {
         "NSFaceIDUsageDescription": "Use Face ID or Touch ID to access your secure care resources",

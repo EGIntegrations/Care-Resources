@@ -65,20 +65,37 @@ export const AppAuthProvider: React.FC<AppAuthProviderProps> = ({ children }) =>
 
   const logout = async () => {
     try {
-      // Sign out from Firebase
-      await auth().signOut();
+      console.log('Starting logout process...');
       
-      // Sign out from Google if user was signed in with Google
-      const isGoogleSignedIn = await GoogleSignin.isSignedIn();
-      if (isGoogleSignedIn) {
-        await GoogleSignin.signOut();
+      // Sign out from Google first (if signed in)
+      try {
+        const isGoogleSignedIn = await GoogleSignin.isSignedIn();
+        if (isGoogleSignedIn) {
+          console.log('Signing out from Google...');
+          await GoogleSignin.signOut();
+        }
+      } catch (googleError) {
+        console.error('Error signing out from Google:', googleError);
+        // Continue with Firebase logout even if Google logout fails
       }
       
+      // Sign out from Firebase
+      console.log('Signing out from Firebase...');
+      await auth().signOut();
+      
       // Remove local auth status
+      console.log('Clearing local auth status...');
       await AsyncStorage.removeItem('userAuthenticated');
-      setIsAuthenticated(false);
+      
+      // Firebase auth listener will handle setting isAuthenticated to false
+      console.log('Logout completed successfully');
+      
     } catch (error) {
       console.error('Error during logout:', error);
+      // Force logout even if there are errors
+      await AsyncStorage.removeItem('userAuthenticated');
+      setIsAuthenticated(false);
+      setUser(null);
       throw error;
     }
   };
