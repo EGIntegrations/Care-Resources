@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Care Resources", 
+    "name": "Care Resources",
     "slug": "care-resources",
     "version": "1.0.6",
     "orientation": "default",
@@ -72,7 +72,9 @@
         {
           "iosUrlScheme": "com.googleusercontent.apps.1041606516821-3srnqsjb1pbp0p8jsq96ma1oskefb5se"
         }
-      ]
+      ],
+      "expo-asset",
+      "expo-font"
     ],
     "extra": {
       "eas": {

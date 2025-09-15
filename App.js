@@ -9,6 +9,15 @@ import { AppAuthProvider, useAppAuth } from './src/context/AppAuthContext';
 import { BottomTabs } from './src/navigation/BottomTabs';
 import { LoginScreen } from './src/screens/Auth/LoginScreen';
 
+// Initialize Firebase
+import { initializeApp, getApps } from '@react-native-firebase/app';
+import auth from '@react-native-firebase/auth';
+
+// Initialize Firebase if not already initialized
+if (getApps().length === 0) {
+  initializeApp();
+}
+
 const AppContent = () => {
   const { isAuthenticated, isLoading, login } = useAppAuth();
 

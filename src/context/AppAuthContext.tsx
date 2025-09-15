@@ -1,9 +1,12 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import auth from '@react-native-firebase/auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 interface AppAuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
+  user: any | null;
   login: () => Promise<void>;
   logout: () => Promise<void>;
 }
@@ -25,20 +28,30 @@ interface AppAuthProviderProps {
 export const AppAuthProvider: React.FC<AppAuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    checkAuthStatus();
+    // Listen for authentication state changes
+    const unsubscribe = auth().onAuthStateChanged((user) => {
+      console.log('Firebase auth state changed:', user ? user.email : 'no user');
+      
+      if (user) {
+        setUser(user);
+        setIsAuthenticated(true);
+        // Save auth status to AsyncStorage
+        AsyncStorage.setItem('userAuthenticated', 'true');
+      } else {
+        setUser(null);
+        setIsAuthenticated(false);
+        AsyncStorage.removeItem('userAuthenticated');
+      }
+      
+      setIsLoading(false);
+    });
+
+    return unsubscribe; // Unsubscribe on unmount
   }, []);
 
-  const checkAuthStatus = async () => {
-    try {
-      const authStatus = await AsyncStorage.getItem('userAuthenticated');
-      setIsAuthenticated(authStatus === 'true');
-    } catch (error) {
-      console.error('Error checking auth status:', error);
-    }
-    setIsLoading(false);
-  };
 
   const login = async () => {
     try {
@@ -52,10 +65,20 @@ export const AppAuthProvider: React.FC<AppAuthProviderProps> = ({ children }) =>
 
   const logout = async () => {
     try {
+      // Sign out from Firebase
+      await auth().signOut();
+      
+      // Sign out from Google if user was signed in with Google
+      const isGoogleSignedIn = await GoogleSignin.isSignedIn();
+      if (isGoogleSignedIn) {
+        await GoogleSignin.signOut();
+      }
+      
+      // Remove local auth status
       await AsyncStorage.removeItem('userAuthenticated');
       setIsAuthenticated(false);
     } catch (error) {
-      console.error('Error removing auth status:', error);
+      console.error('Error during logout:', error);
       throw error;
     }
   };
@@ -65,6 +88,7 @@ export const AppAuthProvider: React.FC<AppAuthProviderProps> = ({ children }) =>
       value={{
         isAuthenticated,
         isLoading,
+        user,
         login,
         logout,
       }}

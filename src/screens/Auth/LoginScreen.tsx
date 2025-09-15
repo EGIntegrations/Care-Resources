@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as LocalAuthentication from 'expo-local-authentication';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
 import { useTheme } from '../../theme/ThemeProvider';
 import { useAuth } from '../../context/AuthContext';
 import { Logo } from '../../components/Logo';
@@ -28,7 +30,14 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
 
   useEffect(() => {
     checkBiometricAvailability();
+    configureGoogleSignIn();
   }, []);
+
+  const configureGoogleSignIn = () => {
+    GoogleSignin.configure({
+      webClientId: '1041606516821-3srnqsjb1pbp0p8jsq96ma1oskefb5se.apps.googleusercontent.com',
+    });
+  };
 
   const checkBiometricAvailability = async () => {
     const compatible = await LocalAuthentication.hasHardwareAsync();
@@ -58,11 +67,37 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
 
   const handleGoogleLogin = async () => {
     setIsLoading(true);
-    // TODO: Implement Google OAuth
-    setTimeout(() => {
-      Alert.alert('Google Login', 'Google authentication will be implemented with Firebase Auth.');
+    try {
+      // Check if your device supports Google Play
+      await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+      
+      // Get the user's ID token
+      const { idToken } = await GoogleSignin.signIn();
+
+      // Create a Google credential with the token
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+      // Sign-in the user with the credential
+      const userCredential = await auth().signInWithCredential(googleCredential);
+      
+      console.log('User signed in with Google:', userCredential.user.email);
+      
+      // Call onLoginSuccess to update app state
+      await onLoginSuccess();
+      
+    } catch (error) {
+      console.error('Google sign-in error:', error);
+      
+      if (error.code === 'auth/operation-not-allowed') {
+        Alert.alert('Error', 'Google sign-in is not enabled for this app.');
+      } else if (error.code === 'auth/invalid-credential') {
+        Alert.alert('Error', 'Invalid Google credentials. Please try again.');
+      } else {
+        Alert.alert('Sign-In Error', 'Failed to sign in with Google. Please try again.');
+      }
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   const handleSSO = async () => {
