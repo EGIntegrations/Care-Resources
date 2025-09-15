@@ -36,6 +36,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
   const configureGoogleSignIn = () => {
     GoogleSignin.configure({
       webClientId: '1041606516821-3srnqsjb1pbp0p8jsq96ma1oskefb5se.apps.googleusercontent.com',
+      iosClientId: '1041606516821-3srnqsjb1pbp0p8jsq96ma1oskefb5se.apps.googleusercontent.com',
     });
   };
 
@@ -100,25 +101,6 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
     }
   };
 
-  const handleSSO = async () => {
-    setIsLoading(true);
-    // TODO: Implement SSO
-    setTimeout(() => {
-      Alert.alert('SSO Login', 'Single Sign-On will be implemented with your organization\'s identity provider.');
-      setIsLoading(false);
-    }, 1000);
-  };
-
-  const handleGuestAccess = () => {
-    Alert.alert(
-      'Guest Access',
-      'Continue as guest? Some features may be limited.',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Continue', onPress: async () => await onLoginSuccess() }
-      ]
-    );
-  };
 
   const styles = StyleSheet.create({
     container: {
@@ -138,11 +120,11 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
       marginTop: height * 0.1,
     },
     welcomeText: {
-      fontSize: fonts.h1,
+      fontSize: fonts.h2,
       fontWeight: 'bold',
       color: colors.white,
       textAlign: 'center',
-      marginTop: spacing[4],
+      marginTop: spacing[3],
       marginBottom: spacing[2],
     },
     subtitleText: {
@@ -248,7 +230,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
       <SafeAreaView style={styles.safeArea} />
       <View style={styles.content}>
         <View style={styles.header}>
-          <Logo size={320} showText={true} />
+          <Logo size={260} showText={true} />
           <Text style={styles.welcomeText}>Welcome</Text>
           <Text style={styles.subtitleText}>
             Access your secure care resources and support network
@@ -268,17 +250,6 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={[styles.loginButton, styles.ssoButton]}
-            onPress={handleSSO}
-            disabled={isLoading}
-            activeOpacity={0.8}
-          >
-            <Ionicons name="business" size={20} color="white" style={styles.buttonIcon} />
-            <Text style={[styles.buttonText, styles.ssoButtonText]}>
-              Organization Sign-In
-            </Text>
-          </TouchableOpacity>
 
           {biometricAvailable && (
             <>
@@ -302,23 +273,6 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
             </>
           )}
 
-          <View style={styles.divider}>
-            <View style={styles.dividerLine} />
-            <Text style={styles.dividerText}>OR</Text>
-            <View style={styles.dividerLine} />
-          </View>
-
-          <TouchableOpacity
-            style={[styles.loginButton, styles.guestButton]}
-            onPress={handleGuestAccess}
-            disabled={isLoading}
-            activeOpacity={0.8}
-          >
-            <Ionicons name="person-outline" size={20} color="white" style={styles.buttonIcon} />
-            <Text style={[styles.buttonText, styles.guestButtonText]}>
-              Continue as Guest
-            </Text>
-          </TouchableOpacity>
         </View>
 
         <View style={styles.footer}>
